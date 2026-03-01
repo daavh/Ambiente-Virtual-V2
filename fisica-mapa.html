@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Mental - Física - AGV ENEM</title>
+
+<!-- Adicionado no <head> de cada arquivo -->
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../android-chrome-512x512.png">
+<link rel="manifest" href="../site.webmanifest">
+<meta name="msapplication-TileColor" content="#0a1929">
+<meta name="theme-color" content="#0a1929">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --cor-primaria: #c45d2b;
+            --cor-secundaria: #d46f3c;
+            --cor-destaque: #e58652;
+            --cor-fundo: #fff0e6;
+            --branco: #ffffff;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--branco);
+            padding: 3px;
+            border: 2px solid #ffd700;
+            transition: all 0.3s;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
+        .header h1 {
+            color: var(--branco);
+            font-size: 1.8rem;
+        }
+
+        .header h1 span {
+            color: #ffd700;
+        }
+
+        .btn-voltar {
+            background: var(--cor-fundo);
+            color: var(--cor-primaria);
+            padding: 10px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-voltar:hover {
+            background: var(--branco);
+            transform: scale(1.05);
+        }
+
+        .mapa-container {
+            background: var(--branco);
+            border-radius: 40px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border: 3px solid var(--cor-primaria);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mapa-container::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 120px;
+            height: 120px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .mapa-titulo {
+            text-align: center;
+            color: var(--cor-primaria);
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .mapa-subtitulo {
+            text-align: center;
+            color: var(--cor-secundaria);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .mapa-central {
+            width: 180px;
+            height: 180px;
+            background: var(--cor-primaria);
+            color: var(--branco);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(196, 93, 43, 0.3);
+            border: 4px solid var(--cor-fundo);
+            padding: 20px;
+            position: relative;
+        }
+
+        .mapa-central::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 40px;
+            height: 40px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.3;
+        }
+
+        .mapa-central span {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .topicos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .topico {
+            background: var(--cor-fundo);
+            border-radius: 25px;
+            padding: 25px;
+            border-top: 6px solid var(--cor-primaria);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topico::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: -5px;
+            width: 40px;
+            height: 40px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.05;
+        }
+
+        .topico:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(196, 93, 43, 0.15);
+        }
+
+        .topico h3 {
+            color: var(--cor-primaria);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            text-align: center;
+            border-bottom: 2px solid var(--cor-primaria);
+            padding-bottom: 10px;
+        }
+
+        .conteudo {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .subtopico {
+            background: var(--branco);
+            border-radius: 15px;
+            padding: 15px;
+        }
+
+        .subtopico h4 {
+            color: var(--cor-primaria);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .subtopico ul {
+            list-style: none;
+        }
+
+        .subtopico li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            color: var(--cor-secundaria);
+        }
+
+        .subtopico li::before {
+            content: '•';
+            color: var(--cor-primaria);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .formula {
+            background: #ffe0d0;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 8px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            text-align: center;
+            border: 1px solid var(--cor-primaria);
+            color: var(--cor-primaria);
+        }
+
+        /* Watermark */
+        .agv-watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        footer {
+            background: var(--cor-primaria);
+            color: var(--branco);
+            padding: 30px 20px;
+            margin-top: 50px;
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--branco);
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="agv-watermark">
+        <img src="../Logo_agv-removebg-preview.png" alt="" style="width: 100%; height: 100%;">
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <!-- LOGO 1/5 -->
+                <img src="../Logo_agv-removebg-preview.png" alt="AGV Logo" class="logo-img">
+                <h1>AGV <span>ENEM</span> - Mapa Mental: Física</h1>
+            </div>
+            <a href="../Ambiente Virtual.html" class="btn-voltar">← Voltar</a>
+        </div>
+
+        <div class="mapa-container">
+            <div class="mapa-titulo">⚡ FÍSICA ENEM</div>
+            <div class="mapa-subtitulo">Mecânica, Termologia, Eletricidade e Ondulatória</div>
+
+            <div class="mapa-central">
+                <span>🔭</span>
+                FÍSICA<br>45 QUESTÕES
+            </div>
+
+            <div class="topicos-grid">
+                <div class="topico">
+                    <h3>📐 MECÂNICA</h3>
+                    <div class="conteudo">
+                        <div class="subtopico">
+                            <h4>Cinemática</h4>
+                            <ul>
+                                <li>Velocidade média: v = Δs/Δt</li>
+                                <li>Aceleração: a = Δv/Δt</li>
+                                <li>MRU: s = s₀ + v·t</li>
+                                <li>MRUV: v = v₀ + a·t</li>
+                            </ul>
+                            <div class="formula">Torricelli: v² = v₀² + 2a·Δs</div>
+                        </div>
+                        <div class="subtopico">
+                            <h4>Dinâmica</h4>
+                            <ul>
+                                <li>2ª Lei de Newton: F = m·a</li>
+                                <li>Peso: P = m·g (g = 10 m/s²)</li>
+                                <li>Força de atrito: Fat = μ·N</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topico">
+                    <h3>🌡️ TERMOLOGIA</h3>
+                    <div class="conteudo">
+                        <div class="subtopico">
+                            <h4>Calorimetria</h4>
+                            <ul>
+                                <li>Calor sensível: Q = m·c·ΔT</li>
+                                <li>Calor latente: Q = m·L</li>
+                            </ul>
+                        </div>
+                        <div class="formula">C/5 = (F-32)/9 = (K-273)/5</div>
+                    </div>
+                </div>
+
+                <div class="topico">
+                    <h3>💡 ELETRICIDADE</h3>
+                    <div class="conteudo">
+                        <div class="subtopico">
+                            <h4>Eletrodinâmica</h4>
+                            <div class="formula">U = R·i (1ª Lei de Ohm)</div>
+                            <div class="formula">P = U·i</div>
+                            <div class="formula">E = P·Δt</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topico">
+                    <h3>🌊 ONDULATÓRIA</h3>
+                    <div class="conteudo">
+                        <div class="subtopico">
+                            <h4>Equação fundamental</h4>
+                            <div class="formula">v = λ·f</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo">
+            <!-- LOGO 2/5 -->
+            <img src="../Logo_agv-removebg-preview.png" alt="AGV Logo">
+            <span style="font-size: 1.3rem; color: #ffd700;">AGV ENEM</span>
+        </div>
+        <p>© 2026 Colégio Estadual Alberto Gomes Veiga</p>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            const logado = localStorage.getItem('usuarioLogado');
+            if (logado !== 'true') {
+                window.location.href = '../login.html';
+            }
+        };
+    </script>
+</body>
+</html>

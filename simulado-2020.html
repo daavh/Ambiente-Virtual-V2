@@ -1,0 +1,3663 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ENEM 2020 - Simulado Completo - AGV</title>
+
+<!-- Adicionado no <head> de cada arquivo -->
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../android-chrome-512x512.png">
+<link rel="manifest" href="../site.webmanifest">
+<meta name="msapplication-TileColor" content="#0a1929">
+<meta name="theme-color" content="#0a1929">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --azul-marinho: #0a1929;
+            --azul-escuro: #1a3a5f;
+            --azul-medio: #2b5a8c;
+            --azul-claro: #ebf5ff;
+            --branco: #ffffff;
+            --vermelho: #dc3545;
+            --verde: #28a745;
+            --amarelo: #ffc107;
+            --cinza: #6c757d;
+        }
+
+        /* SISTEMA ANTI-COLA */
+        .bloqueio-aviso {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 41, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 999999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .bloqueio-aviso.active {
+            display: flex;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .bloqueio-aviso h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--vermelho);
+        }
+
+        .bloqueio-aviso p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .bloqueio-aviso button {
+            background: var(--amarelo);
+            color: var(--azul-marinho);
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid var(--branco);
+        }
+
+        .bloqueio-aviso button:hover {
+            transform: scale(1.05);
+            background: #ffd700;
+        }
+
+        /* HEADER DO SIMULADO */
+        .simulado-header {
+            background: var(--azul-marinho);
+            color: var(--branco);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-bottom: 3px solid var(--amarelo);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-area img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--branco);
+            padding: 3px;
+            border: 2px solid var(--amarelo);
+        }
+
+        .logo-area h1 {
+            font-size: 1.5rem;
+        }
+
+        .logo-area span {
+            color: var(--amarelo);
+        }
+
+        .timer-area {
+            background: var(--azul-escuro);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 3px;
+            border: 2px solid var(--amarelo);
+            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .timer-area.warning {
+            background: var(--vermelho);
+            color: white;
+            animation: warning 1s infinite;
+        }
+
+        @keyframes warning {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .progresso-area {
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 1rem;
+        }
+
+        /* CONTEÚDO DO SIMULADO */
+        .simulado-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 25px;
+        }
+
+        /* ÁREA DAS QUESTÕES */
+        .questoes-area {
+            background: var(--branco);
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .materia-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: var(--azul-claro);
+            padding: 5px;
+            border-radius: 50px;
+            overflow-x: auto;
+        }
+
+        .materia-tab {
+            padding: 12px 25px;
+            border: none;
+            background: transparent;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--azul-marinho);
+            white-space: nowrap;
+        }
+
+        .materia-tab.active {
+            background: var(--azul-marinho);
+            color: var(--branco);
+        }
+
+        .materia-tab:hover:not(.active) {
+            background: rgba(10,25,41,0.1);
+        }
+
+        /* QUESTÃO INDIVIDUAL */
+        .questao-card {
+            background: var(--branco);
+            border: 2px solid var(--azul-claro);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .questao-card:hover {
+            border-color: var(--azul-medio);
+            box-shadow: 0 10px 25px rgba(43,90,140,0.1);
+        }
+
+        .questao-card.respondida {
+            border-left: 10px solid var(--verde);
+            background: #f8fff8;
+        }
+
+        .questao-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--azul-claro);
+        }
+
+        .questao-numero {
+            background: var(--azul-marinho);
+            color: var(--branco);
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .questao-materia {
+            background: var(--azul-claro);
+            color: var(--azul-marinho);
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .questao-enunciado {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .questao-enunciado img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin: 15px 0;
+        }
+
+        .alternativas {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .alternativa {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: var(--azul-claro);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .alternativa:hover {
+            background: #d4e3f0;
+            transform: translateX(5px);
+        }
+
+        .alternativa.selected {
+            background: var(--azul-medio);
+            color: var(--branco);
+            border-color: var(--azul-marinho);
+        }
+
+        .alternativa.selected .alternativa-letra {
+            background: var(--branco);
+            color: var(--azul-marinho);
+        }
+
+        .alternativa-letra {
+            width: 40px;
+            height: 40px;
+            background: var(--branco);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--azul-marinho);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .alternativa-texto {
+            flex: 1;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* BARRA LATERAL */
+        .sidebar {
+            background: var(--branco);
+            border-radius: 30px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, var(--azul-marinho), var(--azul-escuro));
+            color: var(--branco);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .info-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .navegador-questoes {
+            background: var(--azul-claro);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .navegador-questoes h4 {
+            color: var(--azul-marinho);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .botoes-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .btn-questao {
+            aspect-ratio: 1;
+            background: var(--branco);
+            border: 2px solid var(--azul-medio);
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--azul-marinho);
+        }
+
+        .btn-questao:hover {
+            background: var(--azul-medio);
+            color: var(--branco);
+        }
+
+        .btn-questao.respondida {
+            background: var(--verde);
+            color: white;
+            border-color: var(--verde);
+        }
+
+        .btn-questao.atual {
+            background: var(--azul-marinho);
+            color: white;
+            border-color: var(--amarelo);
+            transform: scale(1.05);
+        }
+
+        .btn-finalizar {
+            width: 100%;
+            padding: 18px;
+            background: var(--verde);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-finalizar:hover {
+            background: #218838;
+            transform: scale(1.02);
+        }
+
+        .btn-finalizar:disabled {
+            background: var(--cinza);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* MODAL DE FINALIZAÇÃO */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--branco);
+            border-radius: 40px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-content h2 {
+            color: var(--azul-marinho);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .resumo-stats {
+            background: var(--azul-claro);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--azul-marinho);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-modal {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn-modal.confirm {
+            background: var(--verde);
+            color: white;
+        }
+
+        .btn-modal.cancel {
+            background: var(--cinza);
+            color: white;
+        }
+
+        .btn-modal:hover {
+            transform: scale(1.05);
+        }
+
+        /* MODAL DE RESULTADO */
+        .resultado-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .resultado-modal.active {
+            display: flex;
+        }
+
+        .resultado-content {
+            background: var(--branco);
+            border-radius: 50px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .resultado-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .resultado-header h2 {
+            color: var(--azul-marinho);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .resultado-header p {
+            color: var(--verde);
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .nota-final {
+            background: linear-gradient(135deg, var(--azul-marinho), var(--azul-escuro));
+            color: white;
+            padding: 30px;
+            border-radius: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .nota-final .nota {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .nota-final .acertos {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        .gabaritos-liberados {
+            background: var(--amarelo);
+            color: var(--azul-marinho);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .btn-voltar {
+            background: var(--azul-marinho);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-voltar:hover {
+            background: var(--azul-escuro);
+            transform: scale(1.02);
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 1024px) {
+            .simulado-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .timer-area {
+                font-size: 1.5rem;
+            }
+            
+            .botoes-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- SISTEMA ANTI-COLA -->
+    <div class="bloqueio-aviso" id="bloqueioAviso">
+        <h2>🚫 ATENÇÃO!</h2>
+        <p>Você tentou sair da página do simulado. Isso é considerado COLA e resultará na perda de pontos!</p>
+        <p id="contadorRegressivo">Retornando em 5 segundos...</p>
+        <button onclick="fecharAvisoBloqueio()">Voltar ao Simulado</button>
+    </div>
+
+    <!-- MODAL DE FINALIZAÇÃO -->
+    <div class="modal" id="modalFinalizar">
+        <div class="modal-content">
+            <h2>📝 Finalizar Simulado?</h2>
+            <p>Tem certeza que deseja entregar o simulado?</p>
+            
+            <div class="resumo-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="modalRespondidas">0</div>
+                    <div class="stat-label">Respondidas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="modalNaoRespondidas">180</div>
+                    <div class="stat-label">Não respondidas</div>
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="btn-modal confirm" onclick="finalizarSimulado()">✅ Confirmar</button>
+                <button class="btn-modal cancel" onclick="fecharModal()">❌ Continuar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE RESULTADO -->
+    <div class="resultado-modal" id="resultadoModal">
+        <div class="resultado-content">
+            <div class="resultado-header">
+                <h2>🎉 SIMULADO CONCLUÍDO!</h2>
+                <p>ENEM 2020 - Completo</p>
+            </div>
+            
+            <div class="nota-final">
+                <div class="nota" id="notaFinal">0</div>
+                <div class="acertos" id="acertosFinal">0 de 180 questões</div>
+            </div>
+            
+            <div class="gabaritos-liberados" id="gabaritosLiberados">
+                ✅ Gabaritos liberados para download!
+            </div>
+            
+            <div style="margin: 30px 0;">
+                <h3 style="color: var(--azul-marinho); margin-bottom: 20px;">📊 Desempenho por Matéria</h3>
+                <div id="desempenhoMaterias"></div>
+            </div>
+            
+            <button class="btn-voltar" onclick="voltarAoAmbiente()">⬅️ Voltar ao Ambiente Virtual</button>
+        </div>
+    </div>
+
+    <!-- HEADER DO SIMULADO -->
+    <header class="simulado-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <img src="../Logo_agv-removebg-preview.png" alt="AGV Logo">
+                <h1>AGV <span>ENEM</span> 2020</h1>
+            </div>
+            <div class="timer-area" id="timer">05:30:00</div>
+            <div class="progresso-area" id="progresso">0/180 respondidas</div>
+        </div>
+    </header>
+
+    <main class="simulado-container">
+        <!-- ÁREA DAS QUESTÕES -->
+        <div class="questoes-area">
+            <div class="materia-tabs" id="materiaTabs">
+                <button class="materia-tab active" onclick="mudarMateria('linguagens')">📝 Linguagens</button>
+                <button class="materia-tab" onclick="mudarMateria('humanas')">🌍 Humanas</button>
+                <button class="materia-tab" onclick="mudarMateria('matematica')">🧮 Matemática</button>
+                <button class="materia-tab" onclick="mudarMateria('natureza')">🔬 Natureza</button>
+                <button class="materia-tab" onclick="mudarMateria('redacao')">✍️ Redação</button>
+            </div>
+
+            <div id="questoesContainer">
+                <!-- As questões serão inseridas via JavaScript -->
+            </div>
+        </div>
+
+        <!-- BARRA LATERAL -->
+        <div class="sidebar">
+            <div class="info-card">
+                <h3>ENEM 2020</h3>
+                <p>📅 1º e 2º Dia</p>
+                <p>⏱️ 180 questões</p>
+                <p>✍️ Redação</p>
+            </div>
+
+            <div class="navegador-questoes">
+                <h4>Navegação Rápida</h4>
+                <div class="botoes-grid" id="navegadorBotoes">
+                    <!-- Botões serão gerados via JS -->
+                </div>
+            </div>
+
+            <button class="btn-finalizar" onclick="abrirModalFinalizar()" id="btnFinalizar">
+                📤 Finalizar Simulado
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // ============================================
+        // DADOS DO SIMULADO - BASEADO NO ENEM 2020
+        // ============================================
+        const questoes = [
+            // ========================================
+            // LINGUAGENS (1-45) - COMPLETO
+            // ========================================
+            {
+                id: 1,
+                numero: 1,
+                materia: 'linguagens',
+                enunciado: 'Leia o fragmento do poema "Canção do Exílio", de Gonçalves Dias:\n\n"Minha terra tem palmeiras,\nOnde canta o Sabiá;\nAs aves, que aqui gorjeiam,\nNão gorjeiam como lá.\nNosso céu tem mais estrelas,\nNossas várzeas têm mais flores,\nNossos bosques têm mais vida,\nNossa vida mais amores."\n\nO poema expressa:',
+                alternativas: [
+                    'A) A saudade da pátria e o nacionalismo.',
+                    'B) A crítica à escravidão no Brasil.',
+                    'C) A valorização da cultura indígena.',
+                    'D) O pessimismo em relação ao Brasil.',
+                    'E) A exaltação da natureza europeia.'
+                ],
+                correta: 0
+            },
+            {
+                id: 2,
+                numero: 2,
+                materia: 'linguagens',
+                enunciado: 'Na frase "As águas do rio choravam ao passar pela cidade", a figura de linguagem presente é:',
+                alternativas: [
+                    'A) Metáfora',
+                    'B) Comparação',
+                    'C) Prosopopeia',
+                    'D) Hipérbole',
+                    'E) Ironia'
+                ],
+                correta: 2
+            },
+            {
+                id: 3,
+                numero: 3,
+                materia: 'linguagens',
+                enunciado: 'O Arcadismo, movimento literário do século XVIII, caracterizava-se por:',
+                alternativas: [
+                    'A) Valorização da vida urbana e industrial.',
+                    'B) Idealização da natureza e da vida simples no campo.',
+                    'C) Crítica feroz à burguesia.',
+                    'D) Exaltação do sofrimento amoroso.',
+                    'E) Formalismo e rigor métrico.'
+                ],
+                correta: 1
+            },
+            {
+                id: 4,
+                numero: 4,
+                materia: 'linguagens',
+                enunciado: 'Na oração "Os alunos estudaram para a prova", o sujeito é:',
+                alternativas: [
+                    'A) Oculto',
+                    'B) Simples',
+                    'C) Composto',
+                    'D) Indeterminado',
+                    'E) Inexistente'
+                ],
+                correta: 1
+            },
+            {
+                id: 5,
+                numero: 5,
+                materia: 'linguagens',
+                enunciado: 'O Romantismo no Brasil teve como característica marcante:',
+                alternativas: [
+                    'A) O indianismo, com a valorização do indígena como herói nacional.',
+                    'B) A crítica social e política.',
+                    'C) O experimentalismo formal.',
+                    'D) A objetividade e o racionalismo.',
+                    'E) A volta ao passado clássico.'
+                ],
+                correta: 0
+            },
+            {
+                id: 6,
+                numero: 6,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Comi feijão, arroz, carne e salada", temos exemplos de:',
+                alternativas: [
+                    'A) Hipônimos',
+                    'B) Hiperônimos',
+                    'C) Sinônimos',
+                    'D) Antônimos',
+                    'E) Parônimos'
+                ],
+                correta: 0
+            },
+            {
+                id: 7,
+                numero: 7,
+                materia: 'linguagens',
+                enunciado: 'O Realismo, movimento do final do século XIX, caracterizava-se por:',
+                alternativas: [
+                    'A) Idealização da realidade.',
+                    'B) Análise objetiva e crítica da sociedade.',
+                    'C) Fuga da realidade.',
+                    'D) Subjetivismo exacerbado.',
+                    'E) Valorização do grotesco.'
+                ],
+                correta: 1
+            },
+            {
+                id: 8,
+                numero: 8,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Maria comprou flores para si mesma", o termo "si mesma" é:',
+                alternativas: [
+                    'A) Pronome pessoal do caso reto',
+                    'B) Pronome pessoal do caso oblíquo reflexivo',
+                    'C) Pronome de tratamento',
+                    'D) Pronome indefinido',
+                    'E) Pronome demonstrativo'
+                ],
+                correta: 1
+            },
+            {
+                id: 9,
+                numero: 9,
+                materia: 'linguagens',
+                enunciado: 'O Parnasianismo, no Brasil, tinha como lema:',
+                alternativas: [
+                    'A) "A arte pela arte"',
+                    'B) "Arte engajada"',
+                    'C) "Arte popular"',
+                    'D) "Arte revolucionária"',
+                    'E) "Arte espontânea"'
+                ],
+                correta: 0
+            },
+            {
+                id: 10,
+                numero: 10,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Havia muitas pessoas na festa", o verbo "haver" é:',
+                alternativas: [
+                    'A) Pessoal e concorda com o sujeito',
+                    'B) Impessoal e fica na 3ª pessoa do singular',
+                    'C) Impessoal e vai para o plural',
+                    'D) Pessoal e fica no singular',
+                    'E) Pessoal e vai para o plural'
+                ],
+                correta: 1
+            },
+            {
+                id: 11,
+                numero: 11,
+                materia: 'linguagens',
+                enunciado: 'O Pré-Modernismo (1902-1922) teve como principal representante:',
+                alternativas: [
+                    'A) Machado de Assis',
+                    'B) Euclides da Cunha',
+                    'C) Carlos Drummond de Andrade',
+                    'D) Manuel Bandeira',
+                    'E) João Cabral de Melo Neto'
+                ],
+                correta: 1
+            },
+            {
+                id: 12,
+                numero: 12,
+                materia: 'linguagens',
+                enunciado: 'Na frase "O carro de João é azul", o termo "de João" exerce função de:',
+                alternativas: [
+                    'A) Adjunto adnominal',
+                    'B) Complemento nominal',
+                    'C) Adjunto adverbial',
+                    'D) Aposto',
+                    'E) Vocativo'
+                ],
+                correta: 0
+            },
+            {
+                id: 13,
+                numero: 13,
+                materia: 'linguagens',
+                enunciado: 'O Simbolismo, no final do século XIX, caracterizava-se por:',
+                alternativas: [
+                    'A) Objetividade e racionalismo.',
+                    'B) Subjetivismo, mistério e espiritualidade.',
+                    'C) Crítica social e política.',
+                    'D) Nacionalismo ufanista.',
+                    'E) Formalismo e rigor métrico.'
+                ],
+                correta: 1
+            },
+            {
+                id: 14,
+                numero: 14,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Ela mesma resolveu o problema", o termo "mesma" é:',
+                alternativas: [
+                    'A) Pronome pessoal',
+                    'B) Pronome reflexivo',
+                    'C) Pronome de reforço',
+                    'D) Pronome indefinido',
+                    'E) Pronome demonstrativo'
+                ],
+                correta: 2
+            },
+            {
+                id: 15,
+                numero: 15,
+                materia: 'linguagens',
+                enunciado: 'A segunda geração modernista (1930-1945) no Brasil é marcada por:',
+                alternativas: [
+                    'A) Nacionalismo crítico e experimentalismo.',
+                    'B) Regionalismo e preocupação social.',
+                    'C) Poesia concreta e experimental.',
+                    'D) Formalismo e rigor métrico.',
+                    'E) Idealização da natureza.'
+                ],
+                correta: 1
+            },
+            {
+                id: 16,
+                numero: 16,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Precisa-se de ajudantes", o sujeito é:',
+                alternativas: [
+                    'A) Simples',
+                    'B) Composto',
+                    'C) Indeterminado',
+                    'D) Oculto',
+                    'E) Inexistente'
+                ],
+                correta: 2
+            },
+            {
+                id: 17,
+                numero: 17,
+                materia: 'linguagens',
+                enunciado: 'O Concretismo, movimento da década de 1950, caracterizava-se por:',
+                alternativas: [
+                    'A) Versos livres e brancos.',
+                    'B) Exploração visual do poema, com distribuição gráfica das palavras.',
+                    'C) Subjetivismo e intimismo.',
+                    'D) Crítica social e política.',
+                    'E) Nacionalismo ufanista.'
+                ],
+                correta: 1
+            },
+            {
+                id: 18,
+                numero: 18,
+                materia: 'linguagens',
+                enunciado: 'Na frase "As flores, que são perfumadas, enfeitam o jardim", a oração "que são perfumadas" é:',
+                alternativas: [
+                    'A) Subordinada adjetiva explicativa',
+                    'B) Subordinada adjetiva restritiva',
+                    'C) Subordinada substantiva',
+                    'D) Subordinada adverbial',
+                    'E) Coordenada sindética'
+                ],
+                correta: 0
+            },
+            {
+                id: 19,
+                numero: 19,
+                materia: 'linguagens',
+                enunciado: 'A literatura marginal ou periférica no Brasil caracteriza-se por:',
+                alternativas: [
+                    'A) Ser escrita apenas por autores consagrados.',
+                    'B) Abordar a realidade das periferias e dar voz a grupos excluídos.',
+                    'C) Seguir rigorosamente as normas acadêmicas.',
+                    'D) Ser publicada apenas por grandes editoras.',
+                    'E) Evitar temas sociais e políticos.'
+                ],
+                correta: 1
+            },
+            {
+                id: 20,
+                numero: 20,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Ela é mais inteligente do que ele", temos:',
+                alternativas: [
+                    'A) Comparativo de igualdade',
+                    'B) Comparativo de superioridade',
+                    'C) Comparativo de inferioridade',
+                    'D) Superlativo absoluto',
+                    'E) Superlativo relativo'
+                ],
+                correta: 1
+            },
+            {
+                id: 21,
+                numero: 21,
+                materia: 'linguagens',
+                enunciado: 'O Tropicalismo, movimento cultural da década de 1960, caracterizava-se por:',
+                alternativas: [
+                    'A) Nacionalismo ufanista e conservador.',
+                    'B) Antropofagia cultural, misturando elementos nacionais e estrangeiros.',
+                    'C) Rigor formal e erudição.',
+                    'D) Folclorismo e regionalismo.',
+                    'E) Academicismo e formalismo.'
+                ],
+                correta: 1
+            },
+            {
+                id: 22,
+                numero: 22,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Choveu durante a noite", o verbo "chover" é:',
+                alternativas: [
+                    'A) Pessoal e concorda com o sujeito',
+                    'B) Impessoal e fica na 3ª pessoa do singular',
+                    'C) Impessoal e vai para o plural',
+                    'D) Pessoal e fica no singular',
+                    'E) Pessoal e vai para o plural'
+                ],
+                correta: 1
+            },
+            {
+                id: 23,
+                numero: 23,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Os livros estão sobre a mesa", o termo "sobre a mesa" é:',
+                alternativas: [
+                    'A) Adjunto adnominal',
+                    'B) Adjunto adverbial de lugar',
+                    'C) Complemento nominal',
+                    'D) Objeto indireto',
+                    'E) Predicativo do sujeito'
+                ],
+                correta: 1
+            },
+            {
+                id: 24,
+                numero: 24,
+                materia: 'linguagens',
+                enunciado: 'O Barroco no Brasil teve como principal representante:',
+                alternativas: [
+                    'A) Gregório de Matos',
+                    'B) Cláudio Manuel da Costa',
+                    'C) Tomás Antônio Gonzaga',
+                    'D) José de Alencar',
+                    'E) Machado de Assis'
+                ],
+                correta: 0
+            },
+            {
+                id: 25,
+                numero: 25,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Ela chegou cansada", o termo "cansada" é:',
+                alternativas: [
+                    'A) Adjunto adnominal',
+                    'B) Adjunto adverbial',
+                    'C) Predicativo do sujeito',
+                    'D) Predicativo do objeto',
+                    'E) Complemento nominal'
+                ],
+                correta: 2
+            },
+            {
+                id: 26,
+                numero: 26,
+                materia: 'linguagens',
+                enunciado: 'O Quinhentismo no Brasil caracterizou-se por:',
+                alternativas: [
+                    'A) Textos literários com valorização do índio.',
+                    'B) Textos informativos e catequéticos.',
+                    'C) Poesia lírica e amorosa.',
+                    'D) Teatro de Anchieta apenas.',
+                    'E) Romances urbanos.'
+                ],
+                correta: 1
+            },
+            {
+                id: 27,
+                numero: 27,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Comprei um carro novo", o termo "novo" é:',
+                alternativas: [
+                    'A) Adjunto adnominal',
+                    'B) Adjunto adverbial',
+                    'C) Predicativo do objeto',
+                    'D) Complemento nominal',
+                    'E) Aposto'
+                ],
+                correta: 0
+            },
+            {
+                id: 28,
+                numero: 28,
+                materia: 'linguagens',
+                enunciado: 'O movimento literário conhecido como "Geração de 45" caracterizou-se por:',
+                alternativas: [
+                    'A) Experimentalismo e poesia concreta.',
+                    'B) Retorno à métrica e ao formalismo.',
+                    'C) Nacionalismo crítico.',
+                    'D) Regionalismo e denúncia social.',
+                    'E) Subjetivismo e intimismo.'
+                ],
+                correta: 1
+            },
+            {
+                id: 29,
+                numero: 29,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Ela é a aluna cujo pai é médico", o termo "cujo" é:',
+                alternativas: [
+                    'A) Pronome relativo',
+                    'B) Pronome interrogativo',
+                    'C) Pronome indefinido',
+                    'D) Conjunção subordinativa',
+                    'E) Preposição'
+                ],
+                correta: 0
+            },
+            {
+                id: 30,
+                numero: 30,
+                materia: 'linguagens',
+                enunciado: 'O Naturalismo no Brasil teve como principal obra:',
+                alternativas: [
+                    'A) "Memórias Póstumas de Brás Cubas"',
+                    'B) "O Cortiço", de Aluísio Azevedo',
+                    'C) "Senhora", de José de Alencar',
+                    'D) "Iracema", de José de Alencar',
+                    'E) "Os Sertões", de Euclides da Cunha'
+                ],
+                correta: 1
+            },
+            {
+                id: 31,
+                numero: 31,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Ele falou sobre política", o termo "sobre política" é:',
+                alternativas: [
+                    'A) Objeto direto',
+                    'B) Objeto indireto',
+                    'C) Complemento nominal',
+                    'D) Adjunto adverbial',
+                    'E) Agente da passiva'
+                ],
+                correta: 1
+            },
+            {
+                id: 32,
+                numero: 32,
+                materia: 'linguagens',
+                enunciado: 'O Parnasianismo no Brasil teve como principal representante:',
+                alternativas: [
+                    'A) Olavo Bilac',
+                    'B) Castro Alves',
+                    'C) Gonçalves Dias',
+                    'D) Álvares de Azevedo',
+                    'E) Casimiro de Abreu'
+                ],
+                correta: 0
+            },
+            {
+                id: 33,
+                numero: 33,
+                materia: 'linguagens',
+                enunciado: 'Na frase "A casa foi pintada pelos operários", o termo "pelos operários" é:',
+                alternativas: [
+                    'A) Objeto indireto',
+                    'B) Agente da passiva',
+                    'C) Complemento nominal',
+                    'D) Adjunto adverbial',
+                    'E) Adjunto adnominal'
+                ],
+                correta: 1
+            },
+            {
+                id: 34,
+                numero: 34,
+                materia: 'linguagens',
+                enunciado: 'O Simbolismo no Brasil teve como principal representante:',
+                alternativas: [
+                    'A) Cruz e Sousa',
+                    'B) Alphonsus de Guimaraens',
+                    'C) Augusto dos Anjos',
+                    'D) Mário de Andrade',
+                    'E) Oswald de Andrade'
+                ],
+                correta: 0
+            },
+            {
+                id: 35,
+                numero: 35,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Ela estava feliz com a notícia", o termo "feliz" é:',
+                alternativas: [
+                    'A) Adjunto adnominal',
+                    'B) Predicativo do sujeito',
+                    'C) Predicativo do objeto',
+                    'D) Complemento nominal',
+                    'E) Adjunto adverbial'
+                ],
+                correta: 1
+            },
+            {
+                id: 36,
+                numero: 36,
+                materia: 'linguagens',
+                enunciado: 'O Pré-Modernismo no Brasil teve como obra principal:',
+                alternativas: [
+                    'A) "Os Sertões", de Euclides da Cunha',
+                    'B) "Macunaíma", de Mário de Andrade',
+                    'C) "Vidas Secas", de Graciliano Ramos',
+                    'D) "Capitães da Areia", de Jorge Amado',
+                    'E) "Grande Sertão: Veredas", de Guimarães Rosa'
+                ],
+                correta: 0
+            },
+            {
+                id: 37,
+                numero: 37,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Ela mesma fez o bolo", o termo "mesma" é:',
+                alternativas: [
+                    'A) Pronome pessoal',
+                    'B) Pronome reflexivo',
+                    'C) Pronome de reforço',
+                    'D) Pronome indefinido',
+                    'E) Pronome demonstrativo'
+                ],
+                correta: 2
+            },
+            {
+                id: 38,
+                numero: 38,
+                materia: 'linguagens',
+                enunciado: 'O Classicismo português teve como principal representante:',
+                alternativas: [
+                    'A) Luís de Camões',
+                    'B) Fernando Pessoa',
+                    'C) Eça de Queirós',
+                    'D) José Saramago',
+                    'E) Gil Vicente'
+                ],
+                correta: 0
+            },
+            {
+                id: 39,
+                numero: 39,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Faz dois anos que não o vejo", o verbo "fazer" é:',
+                alternativas: [
+                    'A) Pessoal e concorda com o sujeito',
+                    'B) Impessoal e fica na 3ª pessoa do singular',
+                    'C) Impessoal e vai para o plural',
+                    'D) Pessoal e fica no singular',
+                    'E) Pessoal e vai para o plural'
+                ],
+                correta: 1
+            },
+            {
+                id: 40,
+                numero: 40,
+                materia: 'linguagens',
+                enunciado: 'O Trovadorismo em Portugal caracterizou-se por:',
+                alternativas: [
+                    'A) Cantigas líricas e satíricas',
+                    'B) Romances de cavalaria',
+                    'C) Teatro popular',
+                    'D) Poesia épica',
+                    'E) Crônicas históricas'
+                ],
+                correta: 0
+            },
+            {
+                id: 41,
+                numero: 41,
+                materia: 'linguagens',
+                enunciado: 'O Humanismo em Portugal teve como principal representante:',
+                alternativas: [
+                    'A) Gil Vicente',
+                    'B) Fernão Lopes',
+                    'C) Luís de Camões',
+                    'D) Padre Antônio Vieira',
+                    'E) Gregório de Matos'
+                ],
+                correta: 1
+            },
+            {
+                id: 42,
+                numero: 42,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Ela parecia feliz com o resultado", o termo "feliz" é:',
+                alternativas: [
+                    'A) Adjunto adnominal',
+                    'B) Predicativo do sujeito',
+                    'C) Adjunto adverbial',
+                    'D) Complemento nominal',
+                    'E) Objeto direto'
+                ],
+                correta: 1
+            },
+            {
+                id: 43,
+                numero: 43,
+                materia: 'linguagens',
+                enunciado: 'O trovadorismo em Portugal desenvolveu-se principalmente:',
+                alternativas: [
+                    'A) No século XII',
+                    'B) No século XIV',
+                    'C) No século XVI',
+                    'D) No século XVIII',
+                    'E) No século XX'
+                ],
+                correta: 0
+            },
+            {
+                id: 44,
+                numero: 44,
+                materia: 'linguagens',
+                enunciado: 'Na frase "Eles se amam", o "se" é classificado como:',
+                alternativas: [
+                    'A) Pronome reflexivo',
+                    'B) Pronome recíproco',
+                    'C) Partícula apassivadora',
+                    'D) Índice de indeterminação do sujeito',
+                    'E) Conjunção integrante'
+                ],
+                correta: 1
+            },
+            {
+                id: 45,
+                numero: 45,
+                materia: 'linguagens',
+                enunciado: 'O quinhentismo no Brasil é marcado por duas vertentes principais:',
+                alternativas: [
+                    'A) Literatura informativa e literatura catequética',
+                    'B) Poesia lírica e poesia épica',
+                    'C) Romantismo e realismo',
+                    'D) Barroco e arcadismo',
+                    'E) Modernismo e concretismo'
+                ],
+                correta: 0
+            },
+
+            // ========================================
+            // HUMANAS (46-90) - COMPLETO
+            // ========================================
+            {
+                id: 46,
+                numero: 46,
+                materia: 'humanas',
+                enunciado: 'O fenômeno das "fake news" tem se intensificado nos últimos anos. Sobre esse tema, é correto afirmar que:',
+                alternativas: [
+                    'A) São notícias verdadeiras que circulam nas redes sociais.',
+                    'B) São informações falsas disseminadas, principalmente, para manipular a opinião pública.',
+                    'C) São criadas apenas por governos autoritários.',
+                    'D) Não têm impacto na democracia.',
+                    'E) São facilmente identificáveis pela população.'
+                ],
+                correta: 1
+            },
+            {
+                id: 47,
+                numero: 47,
+                materia: 'humanas',
+                enunciado: 'A desinformação e as fake news representam uma ameaça à democracia porque:',
+                alternativas: [
+                    'A) Fortalecem o jornalismo profissional.',
+                    'B) Dificultam o debate público baseado em fatos.',
+                    'C) Incentivam o pensamento crítico.',
+                    'D) Promovem a diversidade de opiniões.',
+                    'E) Aumentam a confiança nas instituições.'
+                ],
+                correta: 1
+            },
+            {
+                id: 48,
+                numero: 48,
+                materia: 'humanas',
+                enunciado: 'As redes sociais têm sido usadas como ferramentas para:',
+                alternativas: [
+                    'A) Apenas entretenimento.',
+                    'B) Mobilização política e social, mas também para disseminação de fake news.',
+                    'C) Exclusivamente comunicação pessoal.',
+                    'D) Fim do ativismo político.',
+                    'E) Redução da polarização.'
+                ],
+                correta: 1
+            },
+            {
+                id: 49,
+                numero: 49,
+                materia: 'humanas',
+                enunciado: 'O conceito de "pós-verdade" refere-se a:',
+                alternativas: [
+                    'A) Situações em que a verdade é mais importante que a emoção.',
+                    'B) Circunstâncias em que os fatos objetivos são menos influentes na formação da opinião pública do que apelos à emoção e crenças pessoais.',
+                    'C) A busca pela verdade científica.',
+                    'D) O avanço do jornalismo investigativo.',
+                    'E) A valorização dos dados estatísticos.'
+                ],
+                correta: 1
+            },
+            {
+                id: 50,
+                numero: 50,
+                materia: 'humanas',
+                enunciado: 'A Primeira Guerra Mundial (1914-1918) teve como causa imediata:',
+                alternativas: [
+                    'A) A invasão da Polônia pela Alemanha.',
+                    'B) O assassinato do arquiduque Francisco Ferdinando.',
+                    'C) A crise de 1929.',
+                    'D) A Revolução Russa.',
+                    'E) O imperialismo na África.'
+                ],
+                correta: 1
+            },
+            {
+                id: 51,
+                numero: 51,
+                materia: 'humanas',
+                enunciado: 'O Tratado de Versalhes (1919) impôs duras penalidades à:',
+                alternativas: [
+                    'A) França',
+                    'B) Inglaterra',
+                    'C) Alemanha',
+                    'D) Áustria',
+                    'E) Rússia'
+                ],
+                correta: 2
+            },
+            {
+                id: 52,
+                numero: 52,
+                materia: 'humanas',
+                enunciado: 'A Crise de 1929 teve como principal causa:',
+                alternativas: [
+                    'A) A superprodução industrial e a especulação financeira.',
+                    'B) A quebra da bolsa de Tóquio.',
+                    'C) A Segunda Guerra Mundial.',
+                    'D) O surgimento do nazismo.',
+                    'E) A Revolução Russa.'
+                ],
+                correta: 0
+            },
+            {
+                id: 53,
+                numero: 53,
+                materia: 'humanas',
+                enunciado: 'O New Deal, implementado por Franklin Roosevelt, tinha como objetivo:',
+                alternativas: [
+                    'A) Fortalecer o nazismo na Alemanha.',
+                    'B) Combater os efeitos da Crise de 1929 nos EUA.',
+                    'C) Preparar os EUA para a guerra.',
+                    'D) Expandir o comunismo.',
+                    'E) Isolar economicamente os EUA.'
+                ],
+                correta: 1
+            },
+            {
+                id: 54,
+                numero: 54,
+                materia: 'humanas',
+                enunciado: 'A Segunda Guerra Mundial (1939-1945) teve como marco inicial:',
+                alternativas: [
+                    'A) A invasão da Polônia pela Alemanha.',
+                    'B) O ataque a Pearl Harbor.',
+                    'C) A bomba atômica em Hiroshima.',
+                    'D) A Conferência de Munique.',
+                    'E) A queda da França.'
+                ],
+                correta: 0
+            },
+            {
+                id: 55,
+                numero: 55,
+                materia: 'humanas',
+                enunciado: 'O Holocausto foi:',
+                alternativas: [
+                    'A) O genocídio de judeus pelos nazistas.',
+                    'B) A bomba atômica no Japão.',
+                    'C) A Batalha de Stalingrado.',
+                    'D) O desembarque na Normandia.',
+                    'E) A Conferência de Potsdam.'
+                ],
+                correta: 0
+            },
+            {
+                id: 56,
+                numero: 56,
+                materia: 'humanas',
+                enunciado: 'A ONU (Organização das Nações Unidas) foi criada em 1945 com o objetivo de:',
+                alternativas: [
+                    'A) Promover a guerra fria.',
+                    'B) Manter a paz e a segurança internacional.',
+                    'C) Dividir a Alemanha.',
+                    'D) Criar a OTAN.',
+                    'E) Dissolver o Pacto de Varsóvia.'
+                ],
+                correta: 1
+            },
+            {
+                id: 57,
+                numero: 57,
+                materia: 'humanas',
+                enunciado: 'A Guerra Fria (1947-1991) dividiu o mundo em dois blocos. O conflito ideológico entre capitalismo e socialismo teve como um de seus principais símbolos:',
+                alternativas: [
+                    'A) A queda do Muro de Berlim em 1989.',
+                    'B) A criação da Organização das Nações Unidas (ONU).',
+                    'C) O fim da União Soviética em 1991.',
+                    'D) A corrida espacial e a ameaça nuclear.',
+                    'E) A descolonização da África e Ásia.'
+                ],
+                correta: 3
+            },
+            {
+                id: 58,
+                numero: 58,
+                materia: 'humanas',
+                enunciado: 'A Revolução Cubana (1959) resultou na:',
+                alternativas: [
+                    'A) Implantação do socialismo em Cuba.',
+                    'B) Independência de Cuba da Espanha.',
+                    'C) Anexação de Cuba pelos EUA.',
+                    'D) Criação da OEA.',
+                    'E) Guerra Hispano-Americana.'
+                ],
+                correta: 0
+            },
+            {
+                id: 59,
+                numero: 59,
+                materia: 'humanas',
+                enunciado: 'A Crise dos Mísseis (1962) foi um confronto entre:',
+                alternativas: [
+                    'A) EUA e União Soviética, envolvendo mísseis em Cuba.',
+                    'B) China e Taiwan.',
+                    'C) Coreia do Norte e Coreia do Sul.',
+                    'D) Israel e Palestina.',
+                    'E) Índia e Paquistão.'
+                ],
+                correta: 0
+            },
+            {
+                id: 60,
+                numero: 60,
+                materia: 'humanas',
+                enunciado: 'O Apartheid na África do Sul foi:',
+                alternativas: [
+                    'A) Um regime de segregação racial.',
+                    'B) Uma política de integração racial.',
+                    'C) Um movimento de independência.',
+                    'D) Uma guerra civil.',
+                    'E) Um tratado de paz.'
+                ],
+                correta: 0
+            },
+            {
+                id: 61,
+                numero: 61,
+                materia: 'humanas',
+                enunciado: 'Nelson Mandela foi:',
+                alternativas: [
+                    'A) O líder da luta contra o Apartheid na África do Sul.',
+                    'B) O presidente dos EUA durante a Crise de 1929.',
+                    'C) O líder da Revolução Cubana.',
+                    'D) O primeiro-ministro da Inglaterra na Segunda Guerra.',
+                    'E) O fundador da ONU.'
+                ],
+                correta: 0
+            },
+            {
+                id: 62,
+                numero: 62,
+                materia: 'humanas',
+                enunciado: 'A Queda do Muro de Berlim (1989) simbolizou:',
+                alternativas: [
+                    'A) O fim da Guerra Fria.',
+                    'B) O início da Segunda Guerra Mundial.',
+                    'C) A criação da União Europeia.',
+                    'D) A independência da Alemanha.',
+                    'E) A vitória do Eixo.'
+                ],
+                correta: 0
+            },
+            {
+                id: 63,
+                numero: 63,
+                materia: 'humanas',
+                enunciado: 'O fim da União Soviética ocorreu em:',
+                alternativas: [
+                    'A) 1989',
+                    'B) 1991',
+                    'C) 1993',
+                    'D) 1995',
+                    'E) 1997'
+                ],
+                correta: 1
+            },
+            {
+                id: 64,
+                numero: 64,
+                materia: 'humanas',
+                enunciado: 'A globalização, no final do século XX, intensificou-se com:',
+                alternativas: [
+                    'A) O avanço das tecnologias de comunicação e informação.',
+                    'B) A criação de barreiras protecionistas.',
+                    'C) O isolamento econômico dos países.',
+                    'D) A redução do comércio internacional.',
+                    'E) O fortalecimento do feudalismo.'
+                ],
+                correta: 0
+            },
+            {
+                id: 65,
+                numero: 65,
+                materia: 'humanas',
+                enunciado: 'O Mercosul é um bloco econômico formado por:',
+                alternativas: [
+                    'A) Brasil, Argentina, Uruguai e Paraguai.',
+                    'B) EUA, Canadá e México.',
+                    'C) Alemanha, França e Itália.',
+                    'D) China, Japão e Coreia do Sul.',
+                    'E) Rússia, Bielorrússia e Ucrânia.'
+                ],
+                correta: 0
+            },
+            {
+                id: 66,
+                numero: 66,
+                materia: 'humanas',
+                enunciado: 'A União Europeia foi criada com o objetivo de:',
+                alternativas: [
+                    'A) Promover a integração econômica e política na Europa.',
+                    'B) Criar um exército europeu.',
+                    'C) Combater o comunismo.',
+                    'D) Isolar a Alemanha.',
+                    'E) Expandir o capitalismo.'
+                ],
+                correta: 0
+            },
+            {
+                id: 67,
+                numero: 67,
+                materia: 'humanas',
+                enunciado: 'O Brexit foi:',
+                alternativas: [
+                    'A) A saída do Reino Unido da União Europeia.',
+                    'B) A entrada da Inglaterra na UE.',
+                    'C) A criação do euro.',
+                    'D) A independência da Escócia.',
+                    'E) A unificação da Irlanda.'
+                ],
+                correta: 0
+            },
+            {
+                id: 68,
+                numero: 68,
+                materia: 'humanas',
+                enunciado: 'O aquecimento global é causado principalmente:',
+                alternativas: [
+                    'A) Pela emissão de gases de efeito estufa.',
+                    'B) Pelo buraco na camada de ozônio.',
+                    'C) Pela poluição dos oceanos.',
+                    'D) Pelo desmatamento apenas.',
+                    'E) Pelo uso de energia nuclear.'
+                ],
+                correta: 0
+            },
+            {
+                id: 69,
+                numero: 69,
+                materia: 'humanas',
+                enunciado: 'O Acordo de Paris (2015) tem como objetivo:',
+                alternativas: [
+                    'A) Reduzir as emissões de gases de efeito estufa.',
+                    'B) Promover o uso de combustíveis fósseis.',
+                    'C) Aumentar a produção industrial.',
+                    'D) Expandir as fronteiras agrícolas.',
+                    'E) Combater o desmatamento apenas.'
+                ],
+                correta: 0
+            },
+            {
+                id: 70,
+                numero: 70,
+                materia: 'humanas',
+                enunciado: 'A Agenda 2030 da ONU estabelece:',
+                alternativas: [
+                    'A) Os Objetivos de Desenvolvimento Sustentável (ODS).',
+                    'B) A criação de um governo mundial.',
+                    'C) O fim da pobreza até 2020.',
+                    'D) A unificação de todas as nações.',
+                    'E) A extinção das fronteiras.'
+                ],
+                correta: 0
+            },
+            {
+                id: 71,
+                numero: 71,
+                materia: 'humanas',
+                enunciado: 'O conceito de "Desenvolvimento Sustentável" foi definido no Relatório Brundtland (1987) como:',
+                alternativas: [
+                    'A) Crescimento econômico a qualquer custo.',
+                    'B) Desenvolvimento que atende às necessidades do presente sem comprometer as gerações futuras.',
+                    'C) Industrialização acelerada dos países pobres.',
+                    'D) Exploração máxima dos recursos naturais.',
+                    'E) Estagnação econômica para preservar o meio ambiente.'
+                ],
+                correta: 1
+            },
+            {
+                id: 72,
+                numero: 72,
+                materia: 'humanas',
+                enunciado: 'A energia solar e eólica são consideradas:',
+                alternativas: [
+                    'A) Fontes de energia renováveis e limpas.',
+                    'B) Fontes de energia não renováveis.',
+                    'C) Combustíveis fósseis.',
+                    'D) Fontes de energia poluentes.',
+                    'E) Energias nucleares.'
+                ],
+                correta: 0
+            },
+            {
+                id: 73,
+                numero: 73,
+                materia: 'humanas',
+                enunciado: 'O efeito estufa é um fenômeno natural que:',
+                alternativas: [
+                    'A) Mantém a temperatura da Terra adequada para a vida.',
+                    'B) Causa o buraco na camada de ozônio.',
+                    'C) Provoca a chuva ácida.',
+                    'D) Aumenta a radiação ultravioleta.',
+                    'E) Diminui a temperatura do planeta.'
+                ],
+                correta: 0
+            },
+            {
+                id: 74,
+                numero: 74,
+                materia: 'humanas',
+                enunciado: 'A camada de ozônio protege a Terra:',
+                alternativas: [
+                    'A) Dos raios ultravioleta do Sol.',
+                    'B) Do aquecimento global.',
+                    'C) Da chuva ácida.',
+                    'D) Da poluição do ar.',
+                    'E) Dos meteoros.'
+                ],
+                correta: 0
+            },
+            {
+                id: 75,
+                numero: 75,
+                materia: 'humanas',
+                enunciado: 'O Protocolo de Montreal (1987) teve como objetivo:',
+                alternativas: [
+                    'A) Eliminar a produção de substâncias que destroem a camada de ozônio.',
+                    'B) Reduzir as emissões de CO2.',
+                    'C) Combater o desmatamento.',
+                    'D) Proteger a biodiversidade.',
+                    'E) Promover a energia nuclear.'
+                ],
+                correta: 0
+            },
+            {
+                id: 76,
+                numero: 76,
+                materia: 'humanas',
+                enunciado: 'A chuva ácida é causada principalmente:',
+                alternativas: [
+                    'A) Pela emissão de óxidos de enxofre e nitrogênio.',
+                    'B) Pelo acúmulo de lixo nas cidades.',
+                    'C) Pela poluição sonora.',
+                    'D) Pelo uso de agrotóxicos.',
+                    'E) Pelo desmatamento da Amazônia.'
+                ],
+                correta: 0
+            },
+            {
+                id: 77,
+                numero: 77,
+                materia: 'humanas',
+                enunciado: 'A biodiversidade refere-se:',
+                alternativas: [
+                    'A) À variedade de espécies de seres vivos em um ecossistema.',
+                    'B) À quantidade de água doce no planeta.',
+                    'C) Ao volume de florestas tropicais.',
+                    'D) À diversidade de climas na Terra.',
+                    'E) À variação de temperatura global.'
+                ],
+                correta: 0
+            },
+            {
+                id: 78,
+                numero: 78,
+                materia: 'humanas',
+                enunciado: 'Os biomas brasileiros incluem:',
+                alternativas: [
+                    'A) Amazônia, Cerrado, Caatinga, Mata Atlântica, Pampa e Pantanal.',
+                    'B) Apenas Amazônia e Mata Atlântica.',
+                    'C) Floresta Amazônica e Deserto do Saara.',
+                    'D) Tundra, Taiga e Floresta Temperada.',
+                    'E) Savana, Deserto e Floresta Tropical.'
+                ],
+                correta: 0
+            },
+            {
+                id: 79,
+                numero: 79,
+                materia: 'humanas',
+                enunciado: 'A Revolução Francesa (1789) foi influenciada pelos ideais:',
+                alternativas: [
+                    'A) Iluministas',
+                    'B) Socialistas',
+                    'C) Anarquistas',
+                    'D) Fascistas',
+                    'E) Nacionalistas'
+                ],
+                correta: 0
+            },
+            {
+                id: 80,
+                numero: 80,
+                materia: 'humanas',
+                enunciado: 'A Democracia Ateniense na Grécia Antiga caracterizava-se por:',
+                alternativas: [
+                    'A) Participação direta dos cidadãos',
+                    'B) Voto universal',
+                    'C) Representação parlamentar',
+                    'D) Sufrágio feminino',
+                    'E) Eleições indiretas'
+                ],
+                correta: 0
+            },
+            {
+                id: 81,
+                numero: 81,
+                materia: 'humanas',
+                enunciado: 'O Renascimento Cultural (séculos XIV-XVI) caracterizou-se por:',
+                alternativas: [
+                    'A) Antropocentrismo e valorização da cultura clássica',
+                    'B) Teocentrismo e fé religiosa',
+                    'C) Isolamento cultural',
+                    'D) Negação da arte',
+                    'E) Expansão do feudalismo'
+                ],
+                correta: 0
+            },
+            {
+                id: 82,
+                numero: 82,
+                materia: 'humanas',
+                enunciado: 'A Reforma Protestante, iniciada por Martinho Lutero em 1517, criticava:',
+                alternativas: [
+                    'A) A venda de indulgências pela Igreja Católica',
+                    'B) O absolutismo monárquico',
+                    'C) O capitalismo',
+                    'D) A escravidão',
+                    'E) O colonialismo'
+                ],
+                correta: 0
+            },
+            {
+                id: 83,
+                numero: 83,
+                materia: 'humanas',
+                enunciado: 'O Iluminismo foi um movimento intelectual que defendia:',
+                alternativas: [
+                    'A) A razão, a liberdade e o progresso',
+                    'B) A fé religiosa como único guia',
+                    'C) O absolutismo monárquico',
+                    'D) A manutenção dos privilégios da nobreza',
+                    'E) O fim da ciência'
+                ],
+                correta: 0
+            },
+            {
+                id: 84,
+                numero: 84,
+                materia: 'humanas',
+                enunciado: 'A independência do Brasil foi proclamada em:',
+                alternativas: [
+                    'A) 1808',
+                    'B) 1822',
+                    'C) 1889',
+                    'D) 1824',
+                    'E) 1831'
+                ],
+                correta: 1
+            },
+            {
+                id: 85,
+                numero: 85,
+                materia: 'humanas',
+                enunciado: 'A Proclamação da República no Brasil ocorreu em:',
+                alternativas: [
+                    'A) 1822',
+                    'B) 1888',
+                    'C) 1889',
+                    'D) 1891',
+                    'E) 1930'
+                ],
+                correta: 2
+            },
+            {
+                id: 86,
+                numero: 86,
+                materia: 'humanas',
+                enunciado: 'A Constituição de 1988, conhecida como "Constituição Cidadã", representou um marco na redemocratização do Brasil. Entre seus princípios fundamentais, destaca-se:',
+                alternativas: [
+                    'A) A centralização do poder no Executivo.',
+                    'B) A garantia de direitos sociais e individuais.',
+                    'C) A censura prévia à imprensa.',
+                    'D) O fortalecimento do regime militar.',
+                    'E) A restrição ao voto dos analfabetos.'
+                ],
+                correta: 1
+            },
+            {
+                id: 87,
+                numero: 87,
+                materia: 'humanas',
+                enunciado: 'O conceito de "mais-valia", desenvolvido por Karl Marx, refere-se:',
+                alternativas: [
+                    'A) Ao lucro obtido pelo trabalhador ao vender sua força de trabalho.',
+                    'B) Ao valor excedente produzido pelo trabalhador e apropriado pelo capitalista.',
+                    'C) À mais-valia obtida pelo Estado por meio dos impostos.',
+                    'D) Ao valor justo pago ao trabalhador por sua jornada.',
+                    'E) À diferença entre o preço de custo e o preço de venda de um produto.'
+                ],
+                correta: 1
+            },
+            {
+                id: 88,
+                numero: 88,
+                materia: 'humanas',
+                enunciado: 'A filosofia de René Descartes, que afirmava "Penso, logo existo", inaugurou na filosofia moderna:',
+                alternativas: [
+                    'A) O empirismo, baseado na experiência sensorial.',
+                    'B) O racionalismo, baseado na razão como fonte do conhecimento.',
+                    'C) O ceticismo, duvidando de todo conhecimento.',
+                    'D) O materialismo, reduzindo tudo à matéria.',
+                    'E) O idealismo, priorizando as ideias sobre a realidade.'
+                ],
+                correta: 1
+            },
+            {
+                id: 89,
+                numero: 89,
+                materia: 'humanas',
+                enunciado: 'O conceito de "Democracia Racial", desenvolvido por Gilberto Freyre, é atualmente criticado por:',
+                alternativas: [
+                    'A) Comprovar a igualdade racial no Brasil.',
+                    'B) Mascarar as desigualdades e o racismo estrutural.',
+                    'C) Exaltar a miscigenação como única solução.',
+                    'D) Ignorar a contribuição africana.',
+                    'E) Supervalorizar a cultura europeia.'
+                ],
+                correta: 1
+            },
+            {
+                id: 90,
+                numero: 90,
+                materia: 'humanas',
+                enunciado: 'O Aquífero Guarani é uma das maiores reservas de água doce do mundo. Sua localização abrange:',
+                alternativas: [
+                    'A) Apenas o território brasileiro.',
+                    'B) Brasil, Argentina, Paraguai e Uruguai.',
+                    'C) Brasil, Colômbia e Venezuela.',
+                    'D) Apenas a região Sudeste do Brasil.',
+                    'E) Brasil e Bolívia.'
+                ],
+                correta: 1
+            },
+
+            // ========================================
+            // MATEMÁTICA (91-135) - COMPLETO
+            // ========================================
+            {
+                id: 91,
+                numero: 91,
+                materia: 'matematica',
+                enunciado: 'Uma pessoa investiu R$ 5.000,00 em um fundo que rende juros compostos de 1% ao mês. Após 6 meses, o montante aproximado será de:',
+                alternativas: [
+                    'A) R$ 5.300,00',
+                    'B) R$ 5.305,00',
+                    'C) R$ 5.308,00',
+                    'D) R$ 5.310,00',
+                    'E) R$ 5.315,00'
+                ],
+                correta: 2
+            },
+            {
+                id: 92,
+                numero: 92,
+                materia: 'matematica',
+                enunciado: 'Em uma pesquisa, 60% dos entrevistados preferem o produto A, 30% preferem o produto B e 10% não opinaram. Se 200 pessoas foram entrevistadas, quantas preferem o produto A?',
+                alternativas: [
+                    'A) 60',
+                    'B) 80',
+                    'C) 100',
+                    'D) 120',
+                    'E) 140'
+                ],
+                correta: 3
+            },
+            {
+                id: 93,
+                numero: 93,
+                materia: 'matematica',
+                enunciado: 'A área de um círculo de raio 5 cm é, aproximadamente: (use π = 3,14)',
+                alternativas: [
+                    'A) 31,4 cm²',
+                    'B) 62,8 cm²',
+                    'C) 78,5 cm²',
+                    'D) 157 cm²',
+                    'E) 314 cm²'
+                ],
+                correta: 2
+            },
+            {
+                id: 94,
+                numero: 94,
+                materia: 'matematica',
+                enunciado: 'Um produto custava R$ 200,00 e sofreu dois aumentos sucessivos: 10% e depois 20%. Qual o preço final?',
+                alternativas: [
+                    'A) R$ 260,00',
+                    'B) R$ 264,00',
+                    'C) R$ 270,00',
+                    'D) R$ 272,00',
+                    'E) R$ 280,00'
+                ],
+                correta: 1
+            },
+            {
+                id: 95,
+                numero: 95,
+                materia: 'matematica',
+                enunciado: 'Em uma escola, a razão entre o número de meninos e meninas é de 3 para 5. Se há 120 meninas, quantos meninos há?',
+                alternativas: [
+                    'A) 60',
+                    'B) 72',
+                    'C) 80',
+                    'D) 96',
+                    'E) 100'
+                ],
+                correta: 1
+            },
+            {
+                id: 96,
+                numero: 96,
+                materia: 'matematica',
+                enunciado: 'Uma função do 1º grau é dada por f(x) = 3x - 5. O valor de f(4) é:',
+                alternativas: [
+                    'A) 5',
+                    'B) 6',
+                    'C) 7',
+                    'D) 8',
+                    'E) 9'
+                ],
+                correta: 2
+            },
+            {
+                id: 97,
+                numero: 97,
+                materia: 'matematica',
+                enunciado: 'O volume de um cubo de aresta 5 cm é:',
+                alternativas: [
+                    'A) 25 cm³',
+                    'B) 50 cm³',
+                    'C) 75 cm³',
+                    'D) 100 cm³',
+                    'E) 125 cm³'
+                ],
+                correta: 4
+            },
+            {
+                id: 98,
+                numero: 98,
+                materia: 'matematica',
+                enunciado: 'Em uma pesquisa, 40% dos entrevistados preferem o produto X. Se 500 pessoas foram entrevistadas, quantas preferem o produto X?',
+                alternativas: [
+                    'A) 150',
+                    'B) 180',
+                    'C) 200',
+                    'D) 220',
+                    'E) 250'
+                ],
+                correta: 2
+            },
+            {
+                id: 99,
+                numero: 99,
+                materia: 'matematica',
+                enunciado: 'Uma torneira despeja 15 litros de água por minuto. Quantos litros ela despejará em 2 horas e 30 minutos?',
+                alternativas: [
+                    'A) 1.500 litros',
+                    'B) 1.800 litros',
+                    'C) 2.000 litros',
+                    'D) 2.250 litros',
+                    'E) 2.500 litros'
+                ],
+                correta: 3
+            },
+            {
+                id: 100,
+                numero: 100,
+                materia: 'matematica',
+                enunciado: 'Em uma progressão aritmética, o primeiro termo é 5 e a razão é 3. O décimo termo dessa PA é:',
+                alternativas: [
+                    'A) 28',
+                    'B) 30',
+                    'C) 32',
+                    'D) 35',
+                    'E) 38'
+                ],
+                correta: 2
+            },
+            {
+                id: 101,
+                numero: 101,
+                materia: 'matematica',
+                enunciado: 'Qual é o valor de 2³ + 3²?',
+                alternativas: [
+                    'A) 10',
+                    'B) 12',
+                    'C) 15',
+                    'D) 17',
+                    'E) 19'
+                ],
+                correta: 3
+            },
+            {
+                id: 102,
+                numero: 102,
+                materia: 'matematica',
+                enunciado: 'A raiz quadrada de 144 é:',
+                alternativas: [
+                    'A) 10',
+                    'B) 11',
+                    'C) 12',
+                    'D) 13',
+                    'E) 14'
+                ],
+                correta: 2
+            },
+            {
+                id: 103,
+                numero: 103,
+                materia: 'matematica',
+                enunciado: 'Quanto é 15% de 200?',
+                alternativas: [
+                    'A) 20',
+                    'B) 25',
+                    'C) 30',
+                    'D) 35',
+                    'E) 40'
+                ],
+                correta: 2
+            },
+            {
+                id: 104,
+                numero: 104,
+                materia: 'matematica',
+                enunciado: 'Se 5x + 3 = 18, então x vale:',
+                alternativas: [
+                    'A) 2',
+                    'B) 3',
+                    'C) 4',
+                    'D) 5',
+                    'E) 6'
+                ],
+                correta: 1
+            },
+            {
+                id: 105,
+                numero: 105,
+                materia: 'matematica',
+                enunciado: 'A distância entre os pontos A(2,3) e B(5,7) no plano cartesiano é:',
+                alternativas: [
+                    'A) 3',
+                    'B) 4',
+                    'C) 5',
+                    'D) 6',
+                    'E) 7'
+                ],
+                correta: 2
+            },
+            {
+                id: 106,
+                numero: 106,
+                materia: 'matematica',
+                enunciado: 'O valor de log₁₀ 1000 é:',
+                alternativas: [
+                    'A) 1',
+                    'B) 2',
+                    'C) 3',
+                    'D) 4',
+                    'E) 5'
+                ],
+                correta: 2
+            },
+            {
+                id: 107,
+                numero: 107,
+                materia: 'matematica',
+                enunciado: 'Em uma progressão geométrica, o primeiro termo é 2 e a razão é 3. O quarto termo é:',
+                alternativas: [
+                    'A) 18',
+                    'B) 27',
+                    'C) 36',
+                    'D) 45',
+                    'E) 54'
+                ],
+                correta: 4
+            },
+            {
+                id: 108,
+                numero: 108,
+                materia: 'matematica',
+                enunciado: 'A área de um retângulo de base 8 cm e altura 5 cm é:',
+                alternativas: [
+                    'A) 30 cm²',
+                    'B) 35 cm²',
+                    'C) 40 cm²',
+                    'D) 45 cm²',
+                    'E) 50 cm²'
+                ],
+                correta: 2
+            },
+            {
+                id: 109,
+                numero: 109,
+                materia: 'matematica',
+                enunciado: 'O perímetro de um quadrado de lado 7 cm é:',
+                alternativas: [
+                    'A) 14 cm',
+                    'B) 21 cm',
+                    'C) 28 cm',
+                    'D) 35 cm',
+                    'E) 49 cm'
+                ],
+                correta: 2
+            },
+            {
+                id: 110,
+                numero: 110,
+                materia: 'matematica',
+                enunciado: 'Se um ângulo mede 30°, seu complemento mede:',
+                alternativas: [
+                    'A) 30°',
+                    'B) 40°',
+                    'C) 50°',
+                    'D) 60°',
+                    'E) 70°'
+                ],
+                correta: 3
+            },
+            {
+                id: 111,
+                numero: 111,
+                materia: 'matematica',
+                enunciado: 'A média aritmética dos números 4, 8, 12 e 16 é:',
+                alternativas: [
+                    'A) 8',
+                    'B) 9',
+                    'C) 10',
+                    'D) 11',
+                    'E) 12'
+                ],
+                correta: 2
+            },
+            {
+                id: 112,
+                numero: 112,
+                materia: 'matematica',
+                enunciado: 'A mediana dos números 3, 7, 8, 10, 12 é:',
+                alternativas: [
+                    'A) 3',
+                    'B) 7',
+                    'C) 8',
+                    'D) 10',
+                    'E) 12'
+                ],
+                correta: 2
+            },
+            {
+                id: 113,
+                numero: 113,
+                materia: 'matematica',
+                enunciado: 'A moda dos números 2, 3, 3, 5, 7, 7, 7, 9 é:',
+                alternativas: [
+                    'A) 2',
+                    'B) 3',
+                    'C) 5',
+                    'D) 7',
+                    'E) 9'
+                ],
+                correta: 3
+            },
+            {
+                id: 114,
+                numero: 114,
+                materia: 'matematica',
+                enunciado: 'A probabilidade de sair um número par no lançamento de um dado é:',
+                alternativas: [
+                    'A) 1/6',
+                    'B) 1/3',
+                    'C) 1/2',
+                    'D) 2/3',
+                    'E) 5/6'
+                ],
+                correta: 2
+            },
+            {
+                id: 115,
+                numero: 115,
+                materia: 'matematica',
+                enunciado: 'Em uma urna com 5 bolas vermelhas e 3 azuis, a probabilidade de retirar uma bola azul é:',
+                alternativas: [
+                    'A) 1/8',
+                    'B) 3/8',
+                    'C) 5/8',
+                    'D) 3/5',
+                    'E) 5/3'
+                ],
+                correta: 1
+            },
+            {
+                id: 116,
+                numero: 116,
+                materia: 'matematica',
+                enunciado: 'O número 0,25 escrito em forma de fração é:',
+                alternativas: [
+                    'A) 1/2',
+                    'B) 1/3',
+                    'C) 1/4',
+                    'D) 1/5',
+                    'E) 1/6'
+                ],
+                correta: 2
+            },
+            {
+                id: 117,
+                numero: 117,
+                materia: 'matematica',
+                enunciado: 'A fração 3/4 em forma decimal é:',
+                alternativas: [
+                    'A) 0,25',
+                    'B) 0,5',
+                    'C) 0,75',
+                    'D) 0,8',
+                    'E) 0,85'
+                ],
+                correta: 2
+            },
+            {
+                id: 118,
+                numero: 118,
+                materia: 'matematica',
+                enunciado: 'O resultado de (2x + 3)(x - 1) é:',
+                alternativas: [
+                    'A) 2x² + x - 3',
+                    'B) 2x² - x - 3',
+                    'C) 2x² + x + 3',
+                    'D) 2x² - x + 3',
+                    'E) 2x² + 5x - 3'
+                ],
+                correta: 0
+            },
+            {
+                id: 119,
+                numero: 119,
+                materia: 'matematica',
+                enunciado: 'A solução da equação x² - 5x + 6 = 0 é:',
+                alternativas: [
+                    'A) 2 e 3',
+                    'B) 1 e 6',
+                    'C) -2 e -3',
+                    'D) -1 e -6',
+                    'E) 2 e -3'
+                ],
+                correta: 0
+            },
+            {
+                id: 120,
+                numero: 120,
+                materia: 'matematica',
+                enunciado: 'O vértice da parábola y = x² - 4x + 3 é:',
+                alternativas: [
+                    'A) (2, -1)',
+                    'B) (-2, 1)',
+                    'C) (2, 1)',
+                    'D) (-2, -1)',
+                    'E) (0, 3)'
+                ],
+                correta: 0
+            },
+            {
+                id: 121,
+                numero: 121,
+                materia: 'matematica',
+                enunciado: 'O valor de sen 30° é:',
+                alternativas: [
+                    'A) 0',
+                    'B) 1/2',
+                    'C) √2/2',
+                    'D) √3/2',
+                    'E) 1'
+                ],
+                correta: 1
+            },
+            {
+                id: 122,
+                numero: 122,
+                materia: 'matematica',
+                enunciado: 'O valor de cos 60° é:',
+                alternativas: [
+                    'A) 0',
+                    'B) 1/2',
+                    'C) √2/2',
+                    'D) √3/2',
+                    'E) 1'
+                ],
+                correta: 1
+            },
+            {
+                id: 123,
+                numero: 123,
+                materia: 'matematica',
+                enunciado: 'Em um triângulo retângulo, se os catetos medem 3 cm e 4 cm, a hipotenusa mede:',
+                alternativas: [
+                    'A) 5 cm',
+                    'B) 6 cm',
+                    'C) 7 cm',
+                    'D) 8 cm',
+                    'E) 9 cm'
+                ],
+                correta: 0
+            },
+            {
+                id: 124,
+                numero: 124,
+                materia: 'matematica',
+                enunciado: 'A área de um triângulo de base 10 cm e altura 6 cm é:',
+                alternativas: [
+                    'A) 15 cm²',
+                    'B) 20 cm²',
+                    'C) 25 cm²',
+                    'D) 30 cm²',
+                    'E) 35 cm²'
+                ],
+                correta: 3
+            },
+            {
+                id: 125,
+                numero: 125,
+                materia: 'matematica',
+                enunciado: 'O volume de uma esfera de raio 3 cm é aproximadamente: (use π = 3,14)',
+                alternativas: [
+                    'A) 113,04 cm³',
+                    'B) 100,48 cm³',
+                    'C) 87,92 cm³',
+                    'D) 75,36 cm³',
+                    'E) 62,80 cm³'
+                ],
+                correta: 0
+            },
+            {
+                id: 126,
+                numero: 126,
+                materia: 'matematica',
+                enunciado: 'O volume de um cilindro de raio 2 cm e altura 5 cm é aproximadamente: (use π = 3,14)',
+                alternativas: [
+                    'A) 31,4 cm³',
+                    'B) 62,8 cm³',
+                    'C) 94,2 cm³',
+                    'D) 125,6 cm³',
+                    'E) 157,0 cm³'
+                ],
+                correta: 1
+            },
+            {
+                id: 127,
+                numero: 127,
+                materia: 'matematica',
+                enunciado: 'A área de um trapézio de bases 6 cm e 8 cm e altura 4 cm é:',
+                alternativas: [
+                    'A) 14 cm²',
+                    'B) 20 cm²',
+                    'C) 24 cm²',
+                    'D) 28 cm²',
+                    'E) 32 cm²'
+                ],
+                correta: 3
+            },
+            {
+                id: 128,
+                numero: 128,
+                materia: 'matematica',
+                enunciado: 'O perímetro de um círculo de raio 5 cm é aproximadamente: (use π = 3,14)',
+                alternativas: [
+                    'A) 15,7 cm',
+                    'B) 25,12 cm',
+                    'C) 31,4 cm',
+                    'D) 37,68 cm',
+                    'E) 43,96 cm'
+                ],
+                correta: 2
+            },
+            {
+                id: 129,
+                numero: 129,
+                materia: 'matematica',
+                enunciado: 'Se 3x - 7 = 2x + 5, então x vale:',
+                alternativas: [
+                    'A) 10',
+                    'B) 11',
+                    'C) 12',
+                    'D) 13',
+                    'E) 14'
+                ],
+                correta: 2
+            },
+            {
+                id: 130,
+                numero: 130,
+                materia: 'matematica',
+                enunciado: 'A soma dos ângulos internos de um triângulo é:',
+                alternativas: [
+                    'A) 90°',
+                    'B) 180°',
+                    'C) 270°',
+                    'D) 360°',
+                    'E) 450°'
+                ],
+                correta: 1
+            },
+            {
+                id: 131,
+                numero: 131,
+                materia: 'matematica',
+                enunciado: 'A soma dos ângulos internos de um quadrilátero é:',
+                alternativas: [
+                    'A) 180°',
+                    'B) 270°',
+                    'C) 360°',
+                    'D) 450°',
+                    'E) 540°'
+                ],
+                correta: 2
+            },
+            {
+                id: 132,
+                numero: 132,
+                materia: 'matematica',
+                enunciado: 'O número de diagonais de um hexágono é:',
+                alternativas: [
+                    'A) 6',
+                    'B) 7',
+                    'C) 8',
+                    'D) 9',
+                    'E) 10'
+                ],
+                correta: 3
+            },
+            {
+                id: 133,
+                numero: 133,
+                materia: 'matematica',
+                enunciado: 'A área de um losango com diagonais 6 cm e 8 cm é:',
+                alternativas: [
+                    'A) 20 cm²',
+                    'B) 24 cm²',
+                    'C) 28 cm²',
+                    'D) 30 cm²',
+                    'E) 32 cm²'
+                ],
+                correta: 1
+            },
+            {
+                id: 134,
+                numero: 134,
+                materia: 'matematica',
+                enunciado: 'O volume de um prisma de base quadrada com lado 4 cm e altura 10 cm é:',
+                alternativas: [
+                    'A) 120 cm³',
+                    'B) 130 cm³',
+                    'C) 140 cm³',
+                    'D) 150 cm³',
+                    'E) 160 cm³'
+                ],
+                correta: 4
+            },
+            {
+                id: 135,
+                numero: 135,
+                materia: 'matematica',
+                enunciado: 'O volume de uma pirâmide de base quadrada com lado 6 cm e altura 9 cm é:',
+                alternativas: [
+                    'A) 100 cm³',
+                    'B) 108 cm³',
+                    'C) 114 cm³',
+                    'D) 120 cm³',
+                    'E) 126 cm³'
+                ],
+                correta: 1
+            },
+
+            // ========================================
+            // NATUREZA (136-180) - COMPLETO
+            // ========================================
+            {
+                id: 136,
+                numero: 136,
+                materia: 'natureza',
+                enunciado: 'Na fotossíntese, as plantas convertem energia luminosa em energia química. O gás liberado nesse processo é:',
+                alternativas: [
+                    'A) Gás carbônico (CO₂)',
+                    'B) Oxigênio (O₂)',
+                    'C) Nitrogênio (N₂)',
+                    'D) Metano (CH₄)',
+                    'E) Hidrogênio (H₂)'
+                ],
+                correta: 1
+            },
+            {
+                id: 137,
+                numero: 137,
+                materia: 'natureza',
+                enunciado: 'Um carro de massa 1000 kg está a 72 km/h. Sua energia cinética é de: (72 km/h = 20 m/s)',
+                alternativas: [
+                    'A) 100.000 J',
+                    'B) 200.000 J',
+                    'C) 300.000 J',
+                    'D) 400.000 J',
+                    'E) 500.000 J'
+                ],
+                correta: 1
+            },
+            {
+                id: 138,
+                numero: 138,
+                materia: 'natureza',
+                enunciado: 'Na tabela periódica, os elementos do grupo 18 (gases nobres) são caracterizados por:',
+                alternativas: [
+                    'A) Alta reatividade química.',
+                    'B) Baixa eletronegatividade.',
+                    'C) Camada de valência completa.',
+                    'D) Facilidade em formar cátions.',
+                    'E) Tendência a formar ligações iônicas.'
+                ],
+                correta: 2
+            },
+            {
+                id: 139,
+                numero: 139,
+                materia: 'natureza',
+                enunciado: 'O DNA é responsável por armazenar as informações genéticas. Sua estrutura é formada por:',
+                alternativas: [
+                    'A) Aminoácidos',
+                    'B) Carboidratos',
+                    'C) Lipídios',
+                    'D) Nucleotídeos',
+                    'E) Proteínas'
+                ],
+                correta: 3
+            },
+            {
+                id: 140,
+                numero: 140,
+                materia: 'natureza',
+                enunciado: 'Um resistor de 20 Ω é percorrido por uma corrente de 2 A. A potência dissipada é de:',
+                alternativas: [
+                    'A) 40 W',
+                    'B) 60 W',
+                    'C) 80 W',
+                    'D) 100 W',
+                    'E) 120 W'
+                ],
+                correta: 2
+            },
+            {
+                id: 141,
+                numero: 141,
+                materia: 'natureza',
+                enunciado: 'Na cadeia alimentar, os organismos que produzem seu próprio alimento através da fotossíntese são chamados de:',
+                alternativas: [
+                    'A) Consumidores primários',
+                    'B) Consumidores secundários',
+                    'C) Produtores',
+                    'D) Decompositores',
+                    'E) Heterótrofos'
+                ],
+                correta: 2
+            },
+            {
+                id: 142,
+                numero: 142,
+                materia: 'natureza',
+                enunciado: 'Um corpo de massa 2 kg é abandonado de uma altura de 5 m. Considerando g = 10 m/s², sua velocidade ao atingir o solo é de:',
+                alternativas: [
+                    'A) 5 m/s',
+                    'B) 10 m/s',
+                    'C) 15 m/s',
+                    'D) 20 m/s',
+                    'E) 25 m/s'
+                ],
+                correta: 1
+            },
+            {
+                id: 143,
+                numero: 143,
+                materia: 'natureza',
+                enunciado: 'A tabela periódica organiza os elementos em ordem crescente de:',
+                alternativas: [
+                    'A) Massa atômica',
+                    'B) Número atômico',
+                    'C) Eletronegatividade',
+                    'D) Raio atômico',
+                    'E) Densidade'
+                ],
+                correta: 1
+            },
+            {
+                id: 144,
+                numero: 144,
+                materia: 'natureza',
+                enunciado: 'No processo de fotossíntese, as plantas absorvem gás carbônico e liberam:',
+                alternativas: [
+                    'A) Gás carbônico',
+                    'B) Oxigênio',
+                    'C) Nitrogênio',
+                    'D) Vapor d\'água',
+                    'E) Metano'
+                ],
+                correta: 1
+            },
+            {
+                id: 145,
+                numero: 145,
+                materia: 'natureza',
+                enunciado: 'Um carro de massa 800 kg está a 90 km/h. Sua energia cinética é aproximadamente: (90 km/h = 25 m/s)',
+                alternativas: [
+                    'A) 200.000 J',
+                    'B) 225.000 J',
+                    'C) 250.000 J',
+                    'D) 275.000 J',
+                    'E) 300.000 J'
+                ],
+                correta: 2
+            },
+            {
+                id: 146,
+                numero: 146,
+                materia: 'natureza',
+                enunciado: 'O átomo é formado por:',
+                alternativas: [
+                    'A) Prótons, nêutrons e elétrons',
+                    'B) Apenas prótons e elétrons',
+                    'C) Apenas nêutrons e elétrons',
+                    'D) Moléculas e átomos',
+                    'E) Células e tecidos'
+                ],
+                correta: 0
+            },
+            {
+                id: 147,
+                numero: 147,
+                materia: 'natureza',
+                enunciado: 'O número atômico de um elemento é:',
+                alternativas: [
+                    'A) O número de prótons no núcleo',
+                    'B) O número de nêutrons',
+                    'C) A soma de prótons e nêutrons',
+                    'D) O número de elétrons na última camada',
+                    'E) A massa do átomo'
+                ],
+                correta: 0
+            },
+            {
+                id: 148,
+                numero: 148,
+                materia: 'natureza',
+                enunciado: 'A massa atômica de um elemento é:',
+                alternativas: [
+                    'A) O número de prótons',
+                    'B) O número de nêutrons',
+                    'C) A soma de prótons e nêutrons',
+                    'D) O número de elétrons',
+                    'E) A carga do núcleo'
+                ],
+                correta: 2
+            },
+            {
+                id: 149,
+                numero: 149,
+                materia: 'natureza',
+                enunciado: 'Os isótopos são átomos de um mesmo elemento que possuem:',
+                alternativas: [
+                    'A) Mesmo número de prótons e diferente número de nêutrons',
+                    'B) Mesmo número de nêutrons e diferente número de prótons',
+                    'C) Mesmo número de massa',
+                    'D) Mesmo número de elétrons',
+                    'E) Diferente número atômico'
+                ],
+                correta: 0
+            },
+            {
+                id: 150,
+                numero: 150,
+                materia: 'natureza',
+                enunciado: 'A ligação iônica ocorre entre:',
+                alternativas: [
+                    'A) Metais e ametais',
+                    'B) Dois metais',
+                    'C) Dois ametais',
+                    'D) Hidrogênio e oxigênio',
+                    'E) Átomos de gases nobres'
+                ],
+                correta: 0
+            },
+            {
+                id: 151,
+                numero: 151,
+                materia: 'natureza',
+                enunciado: 'A ligação covalente ocorre entre:',
+                alternativas: [
+                    'A) Metais e ametais',
+                    'B) Dois metais',
+                    'C) Dois ametais',
+                    'D) Metal e hidrogênio',
+                    'E) Gases nobres'
+                ],
+                correta: 2
+            },
+            {
+                id: 152,
+                numero: 152,
+                materia: 'natureza',
+                enunciado: 'A água (H₂O) é formada por ligações:',
+                alternativas: [
+                    'A) Iônicas',
+                    'B) Covalentes',
+                    'C) Metálicas',
+                    'D) Dipolo-dipolo',
+                    'E) De hidrogênio'
+                ],
+                correta: 1
+            },
+            {
+                id: 153,
+                numero: 153,
+                materia: 'natureza',
+                enunciado: 'O pH de uma solução ácida é:',
+                alternativas: [
+                    'A) Maior que 7',
+                    'B) Igual a 7',
+                    'C) Menor que 7',
+                    'D) Igual a 0',
+                    'E) Maior que 14'
+                ],
+                correta: 2
+            },
+            {
+                id: 154,
+                numero: 154,
+                materia: 'natureza',
+                enunciado: 'O pH de uma solução básica é:',
+                alternativas: [
+                    'A) Maior que 7',
+                    'B) Igual a 7',
+                    'C) Menor que 7',
+                    'D) Igual a 0',
+                    'E) Menor que 0'
+                ],
+                correta: 0
+            },
+            {
+                id: 155,
+                numero: 155,
+                materia: 'natureza',
+                enunciado: 'A óxido-redução envolve:',
+                alternativas: [
+                    'A) Transferência de elétrons',
+                    'B) Transferência de prótons',
+                    'C) Formação de sais',
+                    'D) Neutralização',
+                    'E) Precipitação'
+                ],
+                correta: 0
+            },
+            {
+                id: 156,
+                numero: 156,
+                materia: 'natureza',
+                enunciado: 'A mitose é um processo de divisão celular que resulta em:',
+                alternativas: [
+                    'A) Duas células-filhas idênticas',
+                    'B) Quatro células-filhas diferentes',
+                    'C) Duas células-filhas diferentes',
+                    'D) Uma célula-filha',
+                    'E) Células haploides'
+                ],
+                correta: 0
+            },
+            {
+                id: 157,
+                numero: 157,
+                materia: 'natureza',
+                enunciado: 'A meiose é um processo de divisão celular que resulta em:',
+                alternativas: [
+                    'A) Duas células diploides',
+                    'B) Quatro células haploides',
+                    'C) Duas células haploides',
+                    'D) Quatro células diploides',
+                    'E) Uma célula diploide'
+                ],
+                correta: 1
+            },
+            {
+                id: 158,
+                numero: 158,
+                materia: 'natureza',
+                enunciado: 'O gene é:',
+                alternativas: [
+                    'A) Um segmento de DNA que contém informação genética',
+                    'B) Uma proteína',
+                    'C) Um carboidrato',
+                    'D) Um lipídio',
+                    'E) Uma organela celular'
+                ],
+                correta: 0
+            },
+            {
+                id: 159,
+                numero: 159,
+                materia: 'natureza',
+                enunciado: 'O DNA está localizado principalmente no:',
+                alternativas: [
+                    'A) Citoplasma',
+                    'B) Núcleo da célula',
+                    'C) Membrana plasmática',
+                    'D) Mitocôndria',
+                    'E) Ribossomo'
+                ],
+                correta: 1
+            },
+            {
+                id: 160,
+                numero: 160,
+                materia: 'natureza',
+                enunciado: 'A primeira lei de Newton (Lei da Inércia) afirma que:',
+                alternativas: [
+                    'A) Um corpo permanece em repouso ou movimento retilíneo uniforme a menos que uma força atue sobre ele',
+                    'B) A força é igual à massa vezes a aceleração',
+                    'C) Para toda ação há uma reação de mesma intensidade e direção, mas sentido oposto',
+                    'D) A energia não pode ser criada nem destruída',
+                    'E) A massa e a energia são equivalentes'
+                ],
+                correta: 0
+            },
+            {
+                id: 161,
+                numero: 161,
+                materia: 'natureza',
+                enunciado: 'A segunda lei de Newton é expressa por:',
+                alternativas: [
+                    'A) F = m × a',
+                    'B) F = m × v',
+                    'C) F = m × d',
+                    'D) F = m / a',
+                    'E) F = a / m'
+                ],
+                correta: 0
+            },
+            {
+                id: 162,
+                numero: 162,
+                materia: 'natureza',
+                enunciado: 'A terceira lei de Newton (Ação e Reação) afirma que:',
+                alternativas: [
+                    'A) As forças sempre aparecem em pares',
+                    'B) A força é igual à massa vezes a aceleração',
+                    'C) Um corpo tende a permanecer em repouso',
+                    'D) A energia se conserva',
+                    'E) A matéria não pode ser criada'
+                ],
+                correta: 0
+            },
+            {
+                id: 163,
+                numero: 163,
+                materia: 'natureza',
+                enunciado: 'A energia potencial gravitacional de um corpo de massa m a uma altura h é dada por:',
+                alternativas: [
+                    'A) Ep = m × g × h',
+                    'B) Ep = m × v² / 2',
+                    'C) Ep = m × g',
+                    'D) Ep = g × h',
+                    'E) Ep = m × h'
+                ],
+                correta: 0
+            },
+            {
+                id: 164,
+                numero: 164,
+                materia: 'natureza',
+                enunciado: 'A energia cinética de um corpo de massa m e velocidade v é dada por:',
+                alternativas: [
+                    'A) Ec = m × v',
+                    'B) Ec = m × v² / 2',
+                    'C) Ec = m × g × h',
+                    'D) Ec = m × a',
+                    'E) Ec = v² / 2m'
+                ],
+                correta: 1
+            },
+            {
+                id: 165,
+                numero: 165,
+                materia: 'natureza',
+                enunciado: 'A pressão é definida como:',
+                alternativas: [
+                    'A) Força por unidade de área',
+                    'B) Força por unidade de volume',
+                    'C) Massa por unidade de área',
+                    'D) Massa por unidade de volume',
+                    'E) Energia por unidade de tempo'
+                ],
+                correta: 0
+            },
+            {
+                id: 166,
+                numero: 166,
+                materia: 'natureza',
+                enunciado: 'A unidade de pressão no SI é:',
+                alternativas: [
+                    'A) Newton (N)',
+                    'B) Pascal (Pa)',
+                    'C) Joule (J)',
+                    'D) Watt (W)',
+                    'E) Metro (m)'
+                ],
+                correta: 1
+            },
+            {
+                id: 167,
+                numero: 167,
+                materia: 'natureza',
+                enunciado: 'O princípio de Pascal é aplicado em:',
+                alternativas: [
+                    'A) Prensas hidráulicas',
+                    'B) Termômetros',
+                    'C) Barômetros',
+                    'D) Manômetros',
+                    'E) Amperímetros'
+                ],
+                correta: 0
+            },
+            {
+                id: 168,
+                numero: 168,
+                materia: 'natureza',
+                enunciado: 'O princípio de Arquimedes trata de:',
+                alternativas: [
+                    'A) Empuxo',
+                    'B) Pressão atmosférica',
+                    'C) Dilatação térmica',
+                    'D) Calor específico',
+                    'E) Condutividade térmica'
+                ],
+                correta: 0
+            },
+            {
+                id: 169,
+                numero: 169,
+                materia: 'natureza',
+                enunciado: 'A temperatura é uma grandeza que mede:',
+                alternativas: [
+                    'A) O grau de agitação das moléculas',
+                    'B) A quantidade de calor',
+                    'C) A energia interna',
+                    'D) O trabalho realizado',
+                    'E) A pressão de um gás'
+                ],
+                correta: 0
+            },
+            {
+                id: 170,
+                numero: 170,
+                materia: 'natureza',
+                enunciado: 'A unidade de temperatura no SI é:',
+                alternativas: [
+                    'A) Celsius (°C)',
+                    'B) Fahrenheit (°F)',
+                    'C) Kelvin (K)',
+                    'D) Joule (J)',
+                    'E) Caloria (cal)'
+                ],
+                correta: 2
+            },
+            {
+                id: 171,
+                numero: 171,
+                materia: 'natureza',
+                enunciado: 'O calor é uma forma de:',
+                alternativas: [
+                    'A) Energia',
+                    'B) Temperatura',
+                    'C) Pressão',
+                    'D) Volume',
+                    'E) Massa'
+                ],
+                correta: 0
+            },
+            {
+                id: 172,
+                numero: 172,
+                materia: 'natureza',
+                enunciado: 'A condução térmica ocorre principalmente em:',
+                alternativas: [
+                    'A) Sólidos',
+                    'B) Líquidos',
+                    'C) Gases',
+                    'D) Vácuo',
+                    'E) Plasma'
+                ],
+                correta: 0
+            },
+            {
+                id: 173,
+                numero: 173,
+                materia: 'natureza',
+                enunciado: 'A convecção térmica ocorre principalmente em:',
+                alternativas: [
+                    'A) Sólidos',
+                    'B) Líquidos e gases',
+                    'C) Vácuo',
+                    'D) Metais',
+                    'E) Cristais'
+                ],
+                correta: 1
+            },
+            {
+                id: 174,
+                numero: 174,
+                materia: 'natureza',
+                enunciado: 'A irradiação térmica pode ocorrer no:',
+                alternativas: [
+                    'A) Vácuo',
+                    'B) Sólidos apenas',
+                    'C) Líquidos apenas',
+                    'D) Gases apenas',
+                    'E) Metais apenas'
+                ],
+                correta: 0
+            },
+            {
+                id: 175,
+                numero: 175,
+                materia: 'natureza',
+                enunciado: 'A dilatação térmica dos sólidos ocorre quando:',
+                alternativas: [
+                    'A) A temperatura aumenta',
+                    'B) A temperatura diminui',
+                    'C) A pressão aumenta',
+                    'D) A pressão diminui',
+                    'E) O volume diminui'
+                ],
+                correta: 0
+            },
+            {
+                id: 176,
+                numero: 176,
+                materia: 'natureza',
+                enunciado: 'A carga elétrica elementar é:',
+                alternativas: [
+                    'A) 1,6 × 10⁻¹⁹ C',
+                    'B) 9,1 × 10⁻³¹ C',
+                    'C) 1,67 × 10⁻²⁷ C',
+                    'D) 3,0 × 10⁸ C',
+                    'E) 6,02 × 10²³ C'
+                ],
+                correta: 0
+            },
+            {
+                id: 177,
+                numero: 177,
+                materia: 'natureza',
+                enunciado: 'A corrente elétrica é:',
+                alternativas: [
+                    'A) O fluxo de elétrons',
+                    'B) A diferença de potencial',
+                    'C) A resistência',
+                    'D) A potência',
+                    'E) A energia'
+                ],
+                correta: 0
+            },
+            {
+                id: 178,
+                numero: 178,
+                materia: 'natureza',
+                enunciado: 'A unidade de corrente elétrica é:',
+                alternativas: [
+                    'A) Volt (V)',
+                    'B) Ampère (A)',
+                    'C) Ohm (Ω)',
+                    'D) Watt (W)',
+                    'E) Joule (J)'
+                ],
+                correta: 1
+            },
+            {
+                id: 179,
+                numero: 179,
+                materia: 'natureza',
+                enunciado: 'A lei de Ohm é expressa por:',
+                alternativas: [
+                    'A) V = R × I',
+                    'B) V = R / I',
+                    'C) V = I / R',
+                    'D) R = V × I',
+                    'E) I = V × R'
+                ],
+                correta: 0
+            },
+            {
+                id: 180,
+                numero: 180,
+                materia: 'natureza',
+                enunciado: 'A potência elétrica é dada por:',
+                alternativas: [
+                    'A) P = V × I',
+                    'B) P = V / I',
+                    'C) P = I / V',
+                    'D) P = R × I',
+                    'E) P = V / R'
+                ],
+                correta: 0
+            }
+        ];
+
+        // ============================================
+        // VARIÁVEIS GLOBAIS
+        // ============================================
+        let respostas = new Array(180).fill(null);
+        let tempoRestante = 5 * 3600 + 30 * 60; // 5h30 em segundos
+        let timerInterval;
+        let materiaAtual = 'linguagens';
+        let simuladoFinalizado = false;
+
+        // ============================================
+        // SISTEMA ANTI-COLA
+        // ============================================
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden && !simuladoFinalizado) {
+                document.getElementById('bloqueioAviso').classList.add('active');
+                let contador = 5;
+                const contadorEl = document.getElementById('contadorRegressivo');
+                
+                const intervalo = setInterval(() => {
+                    contador--;
+                    contadorEl.textContent = `Retornando em ${contador} segundos...`;
+                    
+                    if (contador <= 0) {
+                        clearInterval(intervalo);
+                        registrarTentativaCola();
+                    }
+                }, 1000);
+            }
+        });
+
+        window.addEventListener('blur', function() {
+            if (!simuladoFinalizado) {
+                document.getElementById('bloqueioAviso').classList.add('active');
+            }
+        });
+
+        function fecharAvisoBloqueio() {
+            document.getElementById('bloqueioAviso').classList.remove('active');
+        }
+
+        function registrarTentativaCola() {
+            alert('⚠️ TENTATIVA DE COLA REGISTRADA!');
+            fecharAvisoBloqueio();
+        }
+
+        // ============================================
+        // TIMER
+        // ============================================
+        function iniciarTimer() {
+            timerInterval = setInterval(() => {
+                if (simuladoFinalizado) return;
+                
+                tempoRestante--;
+                
+                if (tempoRestante <= 0) {
+                    clearInterval(timerInterval);
+                    alert('⏰ TEMPO ESGOTADO! Finalizando simulado...');
+                    finalizarSimulado();
+                }
+                
+                atualizarTimer();
+                
+                if (tempoRestante === 1800) {
+                    alert('⚠️ 30 MINUTOS RESTANTES!');
+                    document.getElementById('timer').classList.add('warning');
+                }
+                
+                if (tempoRestante === 600) {
+                    alert('⚠️⚠️ 10 MINUTOS RESTANTES!');
+                }
+                
+                if (tempoRestante === 300) {
+                    alert('⚠️⚠️⚠️ 5 MINUTOS RESTANTES!');
+                }
+            }, 1000);
+        }
+
+        function atualizarTimer() {
+            const horas = Math.floor(tempoRestante / 3600);
+            const minutos = Math.floor((tempoRestante % 3600) / 60);
+            const segundos = tempoRestante % 60;
+            
+            document.getElementById('timer').textContent = 
+                `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+        }
+
+        // ============================================
+        // RENDERIZAR QUESTÕES
+        // ============================================
+        function renderizarQuestoes() {
+            const container = document.getElementById('questoesContainer');
+            
+            let questoesFiltradas = [];
+            
+            if (materiaAtual === 'linguagens') {
+                questoesFiltradas = questoes.filter(q => q.id >= 1 && q.id <= 45);
+            } else if (materiaAtual === 'humanas') {
+                questoesFiltradas = questoes.filter(q => q.id >= 46 && q.id <= 90);
+            } else if (materiaAtual === 'matematica') {
+                questoesFiltradas = questoes.filter(q => q.id >= 91 && q.id <= 135);
+            } else if (materiaAtual === 'natureza') {
+                questoesFiltradas = questoes.filter(q => q.id >= 136 && q.id <= 180);
+            }
+            
+            if (materiaAtual === 'redacao') {
+                container.innerHTML = `
+                    <div class="questao-card">
+                        <div class="questao-header">
+                            <span class="questao-numero">REDAÇÃO</span>
+                            <span class="questao-materia">Proposta</span>
+                        </div>
+                        <div class="questao-enunciado">
+                            <h3 style="color: var(--azul-marinho); margin-bottom: 20px;">TEXTO I</h3>
+                            <p>O fenômeno das fake news tem se intensificado nos últimos anos, especialmente nas redes sociais, afetando processos eleitorais e a confiança nas instituições democráticas.</p>
+                            
+                            <h3 style="color: var(--azul-marinho); margin: 20px 0;">TEXTO II</h3>
+                            <p>Estudos mostram que notícias falsas se espalham mais rapidamente que as verdadeiras, pois apelam para emoções e crenças pré-existentes.</p>
+                            
+                            <h3 style="color: var(--azul-marinho); margin: 20px 0;">TEXTO III</h3>
+                            <p>"A liberdade de expressão é um direito fundamental, mas não pode ser usada como escudo para a disseminação de desinformação" - Organização das Nações Unidas.</p>
+                            
+                            <h3 style="color: var(--azul-marinho); margin: 30px 0 15px;">PROPOSTA DE REDAÇÃO</h3>
+                            <p style="font-weight: bold;">A partir da leitura dos textos motivadores e com base nos conhecimentos construídos ao longo de sua formação, redija um texto dissertativo-argumentativo em modalidade escrita formal da língua portuguesa sobre o tema:</p>
+                            
+                            <p style="font-size: 1.3rem; font-weight: 800; color: var(--azul-marinho); margin: 20px 0; text-align: center;">
+                                "FAKE NEWS E DEMOCRACIA: DESAFIOS PARA A SOCIEDADE BRASILEIRA"
+                            </p>
+                            
+                            <p>Selecione, organize e relacione, de forma coerente e coesa, argumentos e fatos para defesa de seu ponto de vista.</p>
+                            
+                            <div style="background: var(--azul-claro); border-radius: 15px; padding: 20px; margin-top: 20px;">
+                                <p><strong>Instruções:</strong></p>
+                                <ul style="margin-left: 20px;">
+                                    <li>O texto deve ter entre 7 e 30 linhas</li>
+                                    <li>Utilize a modalidade formal da língua portuguesa</li>
+                                    <li>Não copie os textos motivadores</li>
+                                    <li>Apresente proposta de intervenção que respeite os direitos humanos</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <textarea placeholder="Escreva sua redação aqui..." style="width: 100%; min-height: 300px; padding: 15px; border-radius: 15px; border: 2px solid var(--azul-claro); font-family: inherit; resize: vertical;"></textarea>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            questoesFiltradas.forEach(questao => {
+                const respondida = respostas[questao.id - 1] !== null;
+                html += `
+                    <div class="questao-card ${respondida ? 'respondida' : ''}" id="questao-${questao.id}">
+                        <div class="questao-header">
+                            <span class="questao-numero">Questão ${questao.numero}</span>
+                            <span class="questao-materia">${questao.materia === 'linguagens' ? '📝 Linguagens' : 
+                                questao.materia === 'humanas' ? '🌍 Humanas' : 
+                                questao.materia === 'matematica' ? '🧮 Matemática' : '🔬 Natureza'}</span>
+                        </div>
+                        <div class="questao-enunciado">
+                            ${questao.enunciado.replace(/\n/g, '<br>')}
+                        </div>
+                        <div class="alternativas">
+                            ${questao.alternativas.map((alt, index) => `
+                                <div class="alternativa ${respostas[questao.id - 1] === index ? 'selected' : ''}" 
+                                     onclick="selecionarAlternativa(${questao.id}, ${index})">
+                                    <div class="alternativa-letra">${String.fromCharCode(65 + index)}</div>
+                                    <div class="alternativa-texto">${alt}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            atualizarNavegador();
+        }
+
+        // ============================================
+        // FUNÇÕES DE INTERAÇÃO
+        // ============================================
+        function selecionarAlternativa(questaoId, alternativaIndex) {
+            if (simuladoFinalizado) return;
+            
+            respostas[questaoId - 1] = alternativaIndex;
+            renderizarQuestoes();
+            atualizarProgresso();
+        }
+
+        function mudarMateria(materia) {
+            materiaAtual = materia;
+            
+            document.querySelectorAll('.materia-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderizarQuestoes();
+        }
+
+        function atualizarProgresso() {
+            const respondidas = respostas.filter(r => r !== null).length;
+            document.getElementById('progresso').textContent = `${respondidas}/180 respondidas`;
+        }
+
+        function atualizarNavegador() {
+            const navegador = document.getElementById('navegadorBotoes');
+            let botoes = '';
+            
+            for (let i = 1; i <= 180; i++) {
+                const respondida = respostas[i-1] !== null;
+                
+                botoes += `
+                    <button class="btn-questao ${respondida ? 'respondida' : ''}" 
+                            onclick="irParaQuestao(${i})">
+                        ${i}
+                    </button>
+                `;
+            }
+            
+            navegador.innerHTML = botoes;
+        }
+
+        function irParaQuestao(numero) {
+            if (numero <= 45) {
+                materiaAtual = 'linguagens';
+            } else if (numero <= 90) {
+                materiaAtual = 'humanas';
+            } else if (numero <= 135) {
+                materiaAtual = 'matematica';
+            } else {
+                materiaAtual = 'natureza';
+            }
+            
+            renderizarQuestoes();
+            
+            setTimeout(() => {
+                document.getElementById(`questao-${numero}`)?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        // ============================================
+        // FINALIZAÇÃO
+        // ============================================
+        function abrirModalFinalizar() {
+            const respondidas = respostas.filter(r => r !== null).length;
+            document.getElementById('modalRespondidas').textContent = respondidas;
+            document.getElementById('modalNaoRespondidas').textContent = 180 - respondidas;
+            document.getElementById('modalFinalizar').classList.add('active');
+        }
+
+        function fecharModal() {
+            document.getElementById('modalFinalizar').classList.remove('active');
+        }
+
+        function finalizarSimulado() {
+            simuladoFinalizado = true;
+            clearInterval(timerInterval);
+            
+            let acertos = 0;
+            questoes.forEach(q => {
+                if (respostas[q.id - 1] === q.correta) {
+                    acertos++;
+                }
+            });
+            
+            const nota = Math.round((acertos / 180) * 1000);
+            
+            document.getElementById('notaFinal').textContent = nota;
+            document.getElementById('acertosFinal').textContent = `${acertos} de 180 questões`;
+            
+            const materias = [
+                { nome: 'linguagens', label: '📝 Linguagens', inicio: 1, fim: 45 },
+                { nome: 'humanas', label: '🌍 Humanas', inicio: 46, fim: 90 },
+                { nome: 'matematica', label: '🧮 Matemática', inicio: 91, fim: 135 },
+                { nome: 'natureza', label: '🔬 Natureza', inicio: 136, fim: 180 }
+            ];
+            
+            let desempenhoHtml = '';
+            
+            materias.forEach(materia => {
+                const questoesMateria = questoes.filter(q => q.id >= materia.inicio && q.id <= materia.fim);
+                const acertosMateria = questoesMateria.filter(q => respostas[q.id - 1] === q.correta).length;
+                const percentual = Math.round((acertosMateria / questoesMateria.length) * 100);
+                
+                desempenhoHtml += `
+                    <div style="margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span>${materia.label}</span>
+                            <span>${acertosMateria}/${questoesMateria.length} (${percentual}%)</span>
+                        </div>
+                        <div style="width: 100%; height: 10px; background: var(--azul-claro); border-radius: 5px;">
+                            <div style="width: ${percentual}%; height: 100%; background: var(--azul-medio); border-radius: 5px;"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('desempenhoMaterias').innerHTML = desempenhoHtml;
+            
+            const anosConcluidos = JSON.parse(localStorage.getItem('simuladosConcluidos')) || [];
+            if (!anosConcluidos.includes(2020)) {
+                anosConcluidos.push(2020);
+                localStorage.setItem('simuladosConcluidos', JSON.stringify(anosConcluidos));
+            }
+            
+            document.getElementById('modalFinalizar').classList.remove('active');
+            document.getElementById('resultadoModal').classList.add('active');
+        }
+
+        // ============================================
+        // FUNÇÃO CORRIGIDA PARA VOLTAR
+        // ============================================
+        function voltarAoAmbiente() {
+            window.location.href = '../Ambiente Virtual.html';
+        }
+
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
+        window.onload = function() {
+            const logado = localStorage.getItem('usuarioLogado');
+            if (logado !== 'true') {
+                window.location.href = '../login.html';
+                return;
+            }
+            
+            renderizarQuestoes();
+            iniciarTimer();
+            atualizarProgresso();
+        };
+    </script>
+</body>
+</html>

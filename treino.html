@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Treino de Redação - AGV ENEM</title>
+
+<!-- Adicionado no <head> de cada arquivo -->
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../android-chrome-512x512.png">
+<link rel="manifest" href="../site.webmanifest">
+<meta name="msapplication-TileColor" content="#0a1929">
+<meta name="theme-color" content="#0a1929">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        :root {
+            --azul-marinho: #0a1929;
+            --azul-escuro: #1a3a5f;
+            --azul-medio: #2b5a8c;
+            --azul-claro: #ebf5ff;
+            --azul-gelo: #f0f8ff;
+            --branco-puro: #ffffff;
+            --branco-neve: #fafcff;
+            --verde: #28a745;
+            --laranja: #fd7e14;
+            --sombra-media: 0 20px 40px -15px rgba(10, 25, 41, 0.3);
+            --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--branco-neve), var(--azul-claro));
+            color: var(--azul-marinho);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 25, 41, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--branco-puro);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--sombra-media);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--branco-puro);
+            padding: 3px;
+            transition: var(--transicao);
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        .logo-text h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--branco-puro), #b3d9ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            margin: 0;
+        }
+
+        .logo-text span {
+            color: #ffd700;
+            -webkit-text-fill-color: #ffd700;
+        }
+
+        .btn-voltar {
+            background: var(--branco-puro);
+            color: var(--azul-marinho);
+            border: none;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transicao);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn-voltar:hover {
+            transform: translateY(-2px);
+            background: var(--azul-claro);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        .btn-voltar:active {
+            transform: translateY(0);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Título */
+        .titulo-pagina {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .titulo-pagina h2 {
+            font-size: 2.5rem;
+            color: var(--azul-marinho);
+            margin-bottom: 10px;
+        }
+
+        .titulo-pagina p {
+            color: var(--azul-escuro);
+            font-size: 1.2rem;
+        }
+
+        .titulo-pagina::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--azul-marinho), var(--azul-medio), #ffd700);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        /* Cards de opções */
+        .opcoes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .opcao-card {
+            background: var(--branco-puro);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: var(--sombra-media);
+            transition: var(--transicao);
+            border: 1px solid rgba(0,0,0,0.05);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .opcao-card::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .opcao-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 50px -20px rgba(10, 25, 41, 0.4);
+        }
+
+        .opcao-card.tempo {
+            border-top: 8px solid var(--laranja);
+        }
+
+        .opcao-card.livre {
+            border-top: 8px solid var(--verde);
+        }
+
+        .opcao-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .opcao-header .icone {
+            width: 60px;
+            height: 60px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .opcao-card.tempo .icone {
+            background: rgba(253, 126, 20, 0.1);
+            color: var(--laranja);
+        }
+
+        .opcao-card.livre .icone {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--verde);
+        }
+
+        .opcao-header h3 {
+            font-size: 1.8rem;
+            color: var(--azul-marinho);
+        }
+
+        .opcao-descricao {
+            color: var(--azul-escuro);
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .caracteristicas {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .caracteristicas li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--azul-escuro);
+        }
+
+        .caracteristicas li::before {
+            content: '✓';
+            color: var(--verde);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .opcao-card.tempo .caracteristicas li::before {
+            color: var(--laranja);
+        }
+
+        .btn-opcao {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transicao);
+            background: var(--azul-marinho);
+            color: var(--branco-puro);
+        }
+
+        .opcao-card.tempo .btn-opcao:hover {
+            background: var(--laranja);
+        }
+
+        .opcao-card.livre .btn-opcao:hover {
+            background: var(--verde);
+        }
+
+        /* Temas e gêneros */
+        .temas-container {
+            margin-top: 60px;
+            background: var(--azul-claro);
+            border-radius: 30px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .temas-container::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: -10px;
+            width: 60px;
+            height: 60px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .temas-container h4 {
+            color: var(--azul-marinho);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .temas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .tema-tag {
+            background: var(--branco-puro);
+            border-radius: 40px;
+            padding: 10px 20px;
+            text-align: center;
+            color: var(--azul-marinho);
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid var(--azul-medio);
+            transition: var(--transicao);
+            cursor: default;
+        }
+
+        .tema-tag:hover {
+            background: var(--azul-medio);
+            color: var(--branco-puro);
+        }
+
+        /* Modal de aviso */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--branco-puro);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: var(--sombra-media);
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-content h3 {
+            color: var(--azul-marinho);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            color: var(--azul-escuro);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transicao);
+            font-size: 1rem;
+        }
+
+        .modal-btn.primary {
+            background: var(--azul-marinho);
+            color: var(--branco-puro);
+        }
+
+        .modal-btn.primary:hover {
+            background: var(--azul-medio);
+        }
+
+        .modal-btn.secondary {
+            background: var(--azul-claro);
+            color: var(--azul-marinho);
+        }
+
+        .modal-btn.secondary:hover {
+            background: #d0e2ff;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Watermark */
+        .agv-watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .opcoes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .titulo-pagina h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="agv-watermark">
+        <img src="../Logo_agv-removebg-preview.png" alt="" style="width: 100%; height: 100%;">
+    </div>
+
+    <!-- Modal de aviso (em construção) -->
+    <div class="modal" id="modalAviso">
+        <div class="modal-content">
+            <h3>🚧 Em Construção</h3>
+            <p>Esta funcionalidade está sendo desenvolvida. Em breve você poderá treinar redações com tempo ou no modo livre!</p>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" onclick="fecharModal()">Entendi</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <!-- LOGO -->
+                <img src="../Logo_agv-removebg-preview.png" alt="AGV Logo" class="logo-img">
+                <div class="logo-text">
+                    <h1>AGV <span>ENEM</span></h1>
+                </div>
+            </div>
+            <a href="../Ambiente Virtual.html" class="btn-voltar">← Voltar</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="titulo-pagina">
+            <h2>✍️ Treino de Redação</h2>
+            <p>Escolha como deseja praticar</p>
+        </div>
+
+        <div class="opcoes-grid">
+            <!-- OPÇÃO 1: REDAÇÃO COM TEMPO -->
+            <div class="opcao-card tempo" onclick="iniciarRedacaoTempo()">
+                <div class="opcao-header">
+                    <div class="icone">⏱️</div>
+                    <h3>Modo Desafio</h3>
+                </div>
+                <p class="opcao-descricao">
+                    Treine com tempo limitado e receba uma correção automática com pontuação de 0 a 1000.
+                </p>
+                <ul class="caracteristicas">
+                    <li>30 minutos para escrever</li>
+                    <li>Tema e gênero aleatórios</li>
+                    <li>Correção automática ao final</li>
+                    <li>Pontuação de 0 a 1000</li>
+                    <li>Feedback detalhado</li>
+                </ul>
+                <button class="btn-opcao">Começar Desafio de 30min</button>
+            </div>
+
+            <!-- OPÇÃO 2: REDAÇÃO LIVRE -->
+            <div class="opcao-card livre" onclick="iniciarRedacaoLivre()">
+                <div class="opcao-header">
+                    <div class="icone">📝</div>
+                    <h3>Modo Livre</h3>
+                </div>
+                <p class="opcao-descricao">
+                    Escolha o tema, gênero e treine sem pressa. Ideal para praticar com calma.
+                </p>
+                <ul class="caracteristicas">
+                    <li>Sem limite de tempo</li>
+                    <li>Escolha o tema que quiser</li>
+                    <li>Escolha o gênero textual</li>
+                    <li>Pausas a qualquer momento</li>
+                    <li>Salve seus rascunhos</li>
+                </ul>
+                <button class="btn-opcao">Começar Modo Livre</button>
+            </div>
+        </div>
+
+        <!-- Temas e gêneros disponíveis -->
+        <div class="temas-container">
+            <h4>📋 Temas disponíveis</h4>
+            <div class="temas-grid">
+                <span class="tema-tag">Educação</span>
+                <span class="tema-tag">Tecnologia</span>
+                <span class="tema-tag">Meio Ambiente</span>
+                <span class="tema-tag">Saúde Pública</span>
+                <span class="tema-tag">Desigualdade Social</span>
+                <span class="tema-tag">Cultura Brasileira</span>
+                <span class="tema-tag">Inteligência Artificial</span>
+                <span class="tema-tag">Mobilidade Urbana</span>
+                <span class="tema-tag">Segurança</span>
+                <span class="tema-tag">Trabalho</span>
+            </div>
+
+            <h4 style="margin-top: 25px;">📌 Gêneros textuais</h4>
+            <div class="temas-grid">
+                <span class="tema-tag">Dissertativo-argumentativo</span>
+                <span class="tema-tag">Narrativo</span>
+                <span class="tema-tag">Descritivo</span>
+                <span class="tema-tag">Carta argumentativa</span>
+                <span class="tema-tag">Artigo de opinião</span>
+                <span class="tema-tag">Resenha crítica</span>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Função para abrir modal
+        function abrirModal() {
+            document.getElementById('modalAviso').classList.add('active');
+        }
+
+        // Função para fechar modal
+        function fecharModal() {
+            document.getElementById('modalAviso').classList.remove('active');
+        }
+
+        // Função para iniciar redação com tempo (versão temporária)
+        function iniciarRedacaoTempo() {
+            const temas = [
+                "Desafios da inclusão digital no Brasil",
+                "Inteligência Artificial e o futuro do trabalho",
+                "Sustentabilidade e consumo consciente",
+                "Saúde mental dos jovens brasileiros",
+                "Valorização da cultura brasileira",
+                "Desigualdade social no acesso à educação",
+                "Os impactos das redes sociais na sociedade",
+                "Violência urbana e políticas de segurança",
+                "Mobilidade urbana nas grandes cidades",
+                "O papel da ciência no desenvolvimento do país"
+            ];
+
+            const generos = [
+                "Dissertativo-argumentativo",
+                "Carta argumentativa",
+                "Artigo de opinião",
+                "Resenha crítica"
+            ];
+
+            const temaAleatorio = temas[Math.floor(Math.random() * temas.length)];
+            const generoAleatorio = generos[Math.floor(Math.random() * generos.length)];
+
+            sessionStorage.setItem('modoRedacao', 'tempo');
+            sessionStorage.setItem('temaRedacao', temaAleatorio);
+            sessionStorage.setItem('generoRedacao', generoAleatorio);
+            sessionStorage.setItem('tempoRestante', '30');
+
+            abrirModal();
+        }
+
+        // Função para iniciar redação livre (versão temporária)
+        function iniciarRedacaoLivre() {
+            sessionStorage.setItem('modoRedacao', 'livre');
+            abrirModal();
+        }
+
+        // Verificar se está logado
+        window.onload = function() {
+            const logado = localStorage.getItem('usuarioLogado');
+            if (logado !== 'true') {
+                alert('Você precisa fazer login para acessar esta página!');
+                window.location.href = '../login.html';
+            }
+        };
+
+        // Fechar modal ao clicar fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalAviso');
+            if (event.target === modal) {
+                fecharModal();
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temas de Redação 2026 - AGV ENEM</title>
+
+<!-- Adicionado no <head> de cada arquivo -->
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../android-chrome-512x512.png">
+<link rel="manifest" href="../site.webmanifest">
+<meta name="msapplication-TileColor" content="#0a1929">
+<meta name="theme-color" content="#0a1929">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --azul-marinho: #0a1929;
+            --azul-escuro: #1a3a5f;
+            --azul-medio: #2b5a8c;
+            --azul-claro: #ebf5ff;
+            --branco-puro: #ffffff;
+            --sombra-media: 0 20px 40px -15px rgba(10, 25, 41, 0.3);
+            --transicao: all 0.3s ease;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--azul-marinho), var(--azul-escuro));
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--branco-puro);
+            padding: 3px;
+            border: 2px solid #ffd700;
+            transition: var(--transicao);
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
+        .logo-text h1 {
+            color: var(--branco-puro);
+            font-size: 1.8rem;
+        }
+
+        .logo-text span {
+            color: #ffd700;
+        }
+
+        .btn-voltar {
+            background: var(--branco-puro);
+            color: var(--azul-marinho);
+            padding: 10px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transicao);
+        }
+
+        .btn-voltar:hover {
+            background: #ffd700;
+            transform: scale(1.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .temas-header {
+            background: var(--branco-puro);
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .temas-header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .temas-header h1 {
+            color: var(--azul-marinho);
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .filtros {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .filtro-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            background: var(--azul-claro);
+            color: var(--azul-marinho);
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transicao);
+        }
+
+        .filtro-btn.active {
+            background: var(--azul-marinho);
+            color: var(--branco-puro);
+        }
+
+        .filtro-btn:hover {
+            background: var(--azul-medio);
+            color: var(--branco-puro);
+        }
+
+        .temas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .tema-card {
+            background: var(--branco-puro);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--sombra-media);
+            transition: var(--transicao);
+            position: relative;
+        }
+
+        .tema-card::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: -10px;
+            width: 60px;
+            height: 60px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .tema-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .tema-header {
+            padding: 20px;
+            color: var(--branco-puro);
+            position: relative;
+        }
+
+        .tema-header h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .tema-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.3);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            backdrop-filter: blur(5px);
+        }
+
+        .tema-body {
+            padding: 25px;
+        }
+
+        .tema-desc {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .tema-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .meta-item {
+            background: var(--azul-claro);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: var(--azul-marinho);
+        }
+
+        .tema-redacoes {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .redacoes-count {
+            font-weight: bold;
+            color: var(--azul-marinho);
+        }
+
+        .btn-tema {
+            background: var(--azul-marinho);
+            color: var(--branco-puro);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transicao);
+        }
+
+        .btn-tema:hover {
+            background: var(--azul-medio);
+        }
+
+        /* Watermark */
+        .agv-watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        footer {
+            background: var(--azul-marinho);
+            color: var(--branco-puro);
+            padding: 40px 20px;
+            margin-top: 50px;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--branco-puro);
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="agv-watermark">
+        <img src="../Logo_agv-removebg-preview.png" alt="" style="width: 100%; height: 100%;">
+    </div>
+
+    <header>
+        <div class="logo-container">
+            <!-- LOGO 1/5 -->
+            <img src="../Logo_agv-removebg-preview.png" alt="AGV Logo" class="logo-img">
+            <div class="logo-text">
+                <h1>AGV <span>ENEM</span> - Temas 2026</h1>
+            </div>
+        </div>
+        <a href="../Ambiente Virtual.html" class="btn-voltar">← Voltar</a>
+    </header>
+
+    <div class="container">
+        <div class="temas-header">
+            <h1>📋 Temas de Redação 2026</h1>
+            <p style="color: #666; font-size: 1.2em;">Mais de 50 temas atualizados com base nas tendências do ENEM</p>
+            
+            <div class="filtros">
+                <button class="filtro-btn active">Todos</button>
+                <button class="filtro-btn">Sociedade</button>
+                <button class="filtro-btn">Tecnologia</button>
+                <button class="filtro-btn">Meio Ambiente</button>
+                <button class="filtro-btn">Saúde</button>
+                <button class="filtro-btn">Educação</button>
+            </div>
+        </div>
+
+        <div class="temas-grid">
+            <!-- Tema 1 -->
+            <div class="tema-card">
+                <div class="tema-header" style="background: linear-gradient(135deg, var(--azul-marinho), var(--azul-escuro));">
+                    <h3>Desafios da inclusão digital no Brasil</h3>
+                    <div class="tema-badge">🔥 Tendência</div>
+                </div>
+                <div class="tema-body">
+                    <p class="tema-desc">A exclusão digital afeta milhões de brasileiros, limitando acesso à educação, trabalho e serviços públicos.</p>
+                    <div class="tema-meta">
+                        <span class="meta-item">📊 Sociedade</span>
+                        <span class="meta-item">📅 2026</span>
+                    </div>
+                    <div class="tema-redacoes">
+                        <span class="redacoes-count">📝 45 redações</span>
+                        <button class="btn-tema" onclick="window.location.href='treino.html'">Praticar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tema 2 -->
+            <div class="tema-card">
+                <div class="tema-header" style="background: linear-gradient(135deg, var(--azul-medio), #1e4d8c);">
+                    <h3>Inteligência Artificial e o futuro do trabalho</h3>
+                    <div class="tema-badge">🤖 Atual</div>
+                </div>
+                <div class="tema-body">
+                    <p class="tema-desc">Com o avanço da IA, muitas profissões podem desaparecer. Como preparar a sociedade?</p>
+                    <div class="tema-meta">
+                        <span class="meta-item">💻 Tecnologia</span>
+                        <span class="meta-item">📅 2026</span>
+                    </div>
+                    <div class="tema-redacoes">
+                        <span class="redacoes-count">📝 38 redações</span>
+                        <button class="btn-tema" onclick="window.location.href='treino.html'">Praticar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tema 3 -->
+            <div class="tema-card">
+                <div class="tema-header" style="background: linear-gradient(135deg, #228b22, #1e6b1e);">
+                    <h3>Sustentabilidade e consumo consciente</h3>
+                    <div class="tema-badge">🌱 Urgente</div>
+                </div>
+                <div class="tema-body">
+                    <p class="tema-desc">O consumo excessivo ameaça o planeta. Como promover hábitos sustentáveis?</p>
+                    <div class="tema-meta">
+                        <span class="meta-item">🌍 Meio Ambiente</span>
+                        <span class="meta-item">📅 2026</span>
+                    </div>
+                    <div class="tema-redacoes">
+                        <span class="redacoes-count">📝 52 redações</span>
+                        <button class="btn-tema" onclick="window.location.href='treino.html'">Praticar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tema 4 -->
+            <div class="tema-card">
+                <div class="tema-header" style="background: linear-gradient(135deg, #dc143c, #b01232);">
+                    <h3>Saúde mental dos jovens brasileiros</h3>
+                    <div class="tema-badge">🧠 Prioritário</div>
+                </div>
+                <div class="tema-body">
+                    <p class="tema-desc">Ansiedade, depressão e burnout são cada vez mais comuns entre jovens.</p>
+                    <div class="tema-meta">
+                        <span class="meta-item">❤️ Saúde</span>
+                        <span class="meta-item">📅 2026</span>
+                    </div>
+                    <div class="tema-redacoes">
+                        <span class="redacoes-count">📝 67 redações</span>
+                        <button class="btn-tema" onclick="window.location.href='treino.html'">Praticar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tema 5 -->
+            <div class="tema-card">
+                <div class="tema-header" style="background: linear-gradient(135deg, #8b4513, #6b3510);">
+                    <h3>Valorização da cultura brasileira</h3>
+                    <div class="tema-badge">🎭 Cultural</div>
+                </div>
+                <div class="tema-body">
+                    <p class="tema-desc">A cultura brasileira é rica mas pouco valorizada. Como preservá-la?</p>
+                    <div class="tema-meta">
+                        <span class="meta-item">🎨 Cultura</span>
+                        <span class="meta-item">📅 2026</span>
+                    </div>
+                    <div class="tema-redacoes">
+                        <span class="redacoes-count">📝 23 redações</span>
+                        <button class="btn-tema" onclick="window.location.href='treino.html'">Praticar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tema 6 -->
+            <div class="tema-card">
+                <div class="tema-header" style="background: linear-gradient(135deg, #4a1d6d, #3a1757);">
+                    <h3>Desigualdade social no acesso à educação</h3>
+                    <div class="tema-badge">📚 Estrutural</div>
+                </div>
+                <div class="tema-body">
+                    <p class="tema-desc">A qualidade do ensino ainda é muito desigual no Brasil.</p>
+                    <div class="tema-meta">
+                        <span class="meta-item">🏫 Educação</span>
+                        <span class="meta-item">📅 2026</span>
+                    </div>
+                    <div class="tema-redacoes">
+                        <span class="redacoes-count">📝 31 redações</span>
+                        <button class="btn-tema" onclick="window.location.href='treino.html'">Praticar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dicas extras -->
+        <div style="background: linear-gradient(135deg, #ffd700, #ffed4e); border-radius: 20px; padding: 30px; margin-top: 40px;">
+            <h2 style="color: var(--azul-marinho); margin-bottom: 20px;">💡 Dicas para escolher o tema</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="background: white; padding: 20px; border-radius: 15px;">
+                    <strong>1️⃣ Comece pelos temas atuais</strong>
+                    <p style="margin-top: 10px; color: #666;">Temas como IA e sustentabilidade têm caído com frequência</p>
+                </div>
+                <div style="background: white; padding: 20px; border-radius: 15px;">
+                    <strong>2️⃣ Varie os assuntos</strong>
+                    <p style="margin-top: 10px; color: #666;">Não treine apenas um tipo de tema</p>
+                </div>
+                <div style="background: white; padding: 20px; border-radius: 15px;">
+                    <strong>3️⃣ Leia redações nota 1000</strong>
+                    <p style="margin-top: 10px; color: #666;">Entenda como os melhores abordam cada tema</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <!-- LOGO 2/5 -->
+                <img src="../Logo_agv-removebg-preview.png" alt="AGV Logo">
+                <span style="font-size: 1.5rem; color: #ffd700;">AGV ENEM</span>
+            </div>
+            <p>© 2026 Colégio Estadual Alberto Gomes Veiga - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            const logado = localStorage.getItem('usuarioLogado');
+            if (logado !== 'true') {
+                alert('Você precisa fazer login para acessar esta página!');
+                window.location.href = '../login.html';
+            }
+        };
+    </script>
+</body>
+</html>

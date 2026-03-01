@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dicas de Redação - AGV ENEM</title>
+
+<!-- Adicionado no <head> de cada arquivo -->
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../android-chrome-512x512.png">
+<link rel="manifest" href="../site.webmanifest">
+<meta name="msapplication-TileColor" content="#0a1929">
+<meta name="theme-color" content="#0a1929">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --azul-marinho: #0a1929;
+            --azul-escuro: #1a3a5f;
+            --azul-medio: #2b5a8c;
+            --azul-claro: #ebf5ff;
+            --branco-puro: #ffffff;
+            --sombra-media: 0 20px 40px -15px rgba(10, 25, 41, 0.3);
+            --transicao: all 0.3s ease;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--azul-marinho), var(--azul-escuro));
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--branco-puro);
+            padding: 3px;
+            border: 2px solid #ffd700;
+            transition: var(--transicao);
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
+        .logo-text h1 {
+            color: var(--branco-puro);
+            font-size: 1.8rem;
+        }
+
+        .logo-text span {
+            color: #ffd700;
+        }
+
+        .btn-voltar {
+            background: var(--branco-puro);
+            color: var(--azul-marinho);
+            padding: 10px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transicao);
+        }
+
+        .btn-voltar:hover {
+            background: #ffd700;
+            transform: scale(1.05);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .dica-section {
+            background: var(--branco-puro);
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dica-section::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .dica-section h2 {
+            color: var(--azul-marinho);
+            font-size: 2rem;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #ffd700;
+            padding-bottom: 10px;
+        }
+
+        .competencias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .competencia-card {
+            background: var(--azul-claro);
+            border-radius: 20px;
+            padding: 25px;
+            border-left: 5px solid var(--azul-marinho);
+        }
+
+        .competencia-card h3 {
+            color: var(--azul-marinho);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .competencia-card p {
+            color: var(--azul-escuro);
+            line-height: 1.6;
+        }
+
+        .dica-lista {
+            list-style: none;
+        }
+
+        .dica-lista li {
+            margin-bottom: 20px;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .dica-lista li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+            color: var(--azul-medio);
+        }
+
+        .estrutura {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .estrutura-item {
+            background: var(--azul-claro);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--azul-marinho);
+        }
+
+        .estrutura-item h4 {
+            color: var(--azul-marinho);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Watermark */
+        .agv-watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        footer {
+            background: var(--azul-marinho);
+            color: var(--branco-puro);
+            padding: 40px 20px;
+            margin-top: 50px;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--branco-puro);
+            padding: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .estrutura {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="agv-watermark">
+        <img src="../Logo_agv-removebg-preview.png" alt="" style="width: 100%; height: 100%;">
+    </div>
+
+    <header>
+        <div class="logo-container">
+            <!-- LOGO 1/5 -->
+            <img src="../Logo_agv-removebg-preview.png" alt="AGV Logo" class="logo-img">
+            <div class="logo-text">
+                <h1>AGV <span>ENEM</span> - Dicas de Redação</h1>
+            </div>
+        </div>
+        <a href="../Ambiente Virtual.html" class="btn-voltar">← Voltar</a>
+    </header>
+
+    <div class="container">
+        <div class="dica-section">
+            <h2>📝 As 5 Competências do ENEM</h2>
+            <div class="competencias-grid">
+                <div class="competencia-card">
+                    <h3>Competência 1</h3>
+                    <p><strong>Domínio da norma culta:</strong> Demonstrar conhecimento da língua portuguesa, com uso correto de gramática e ortografia.</p>
+                </div>
+                <div class="competencia-card">
+                    <h3>Competência 2</h3>
+                    <p><strong>Compreender o tema:</strong> Entender a proposta e desenvolver o texto sem fugir do assunto.</p>
+                </div>
+                <div class="competencia-card">
+                    <h3>Competência 3</h3>
+                    <p><strong>Selecionar argumentos:</strong> Organizar informações e defender um ponto de vista com argumentos consistentes.</p>
+                </div>
+                <div class="competencia-card">
+                    <h3>Competência 4</h3>
+                    <p><strong>Conectivos:</strong> Utilizar mecanismos linguísticos para estabelecer ligações entre as partes do texto.</p>
+                </div>
+                <div class="competencia-card">
+                    <h3>Competência 5</h3>
+                    <p><strong>Proposta de intervenção:</strong> Elaborar proposta de solução para o problema, respeitando os direitos humanos.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="dica-section">
+            <h2>📌 Estrutura da Redação</h2>
+            <div class="estrutura">
+                <div class="estrutura-item">
+                    <h4>Introdução</h4>
+                    <p>Apresente o tema e sua tese (1 parágrafo)</p>
+                </div>
+                <div class="estrutura-item">
+                    <h4>Desenvolvimento</h4>
+                    <p>Argumentos e repertório (2 parágrafos)</p>
+                </div>
+                <div class="estrutura-item">
+                    <h4>Conclusão</h4>
+                    <p>Proposta de intervenção (1 parágrafo)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="dica-section">
+            <h2>💡 Dicas de Ouro</h2>
+            <ul class="dica-lista">
+                <li><strong>Leia a proposta com atenção:</strong> Identifique o tema central e evite fugir do assunto.</li>
+                <li><strong>Use repertório sociocultural:</strong> Cite filmes, livros, filósofos ou acontecimentos históricos.</li>
+                <li><strong>Evite clichês:</strong> Frases como "desde os primórdios" ou "nos dias atuais" são muito repetitivas.</li>
+                <li><strong>Respeite os direitos humanos:</strong> Sua proposta de intervenção não pode ferir direitos fundamentais.</li>
+                <li><strong>Pratique muito:</strong> Escreva pelo menos uma redação por semana e peça correção.</li>
+            </ul>
+        </div>
+
+        <div class="dica-section">
+            <h2>🔗 Conectivos Essenciais</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <div style="background: var(--azul-claro); padding: 15px; border-radius: 15px;">
+                    <strong>Adição</strong>
+                    <p style="margin-top: 10px;">Além disso, ademais, outrossim, também</p>
+                </div>
+                <div style="background: var(--azul-claro); padding: 15px; border-radius: 15px;">
+                    <strong>Oposição</strong>
+                    <p style="margin-top: 10px;">Entretanto, todavia, contudo, porém</p>
+                </div>
+                <div style="background: var(--azul-claro); padding: 15px; border-radius: 15px;">
+                    <strong>Conclusão</strong>
+                    <p style="margin-top: 10px;">Portanto, assim, desse modo, logo</p>
+                </div>
+                <div style="background: var(--azul-claro); padding: 15px; border-radius: 15px;">
+                    <strong>Exemplificação</strong>
+                    <p style="margin-top: 10px;">Por exemplo, como se vê, a exemplo de</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <!-- LOGO 2/5 -->
+                <img src="../Logo_agv-removebg-preview.png" alt="AGV Logo">
+                <span style="font-size: 1.5rem; color: #ffd700;">AGV ENEM</span>
+            </div>
+            <p>© 2026 Colégio Estadual Alberto Gomes Veiga - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            const logado = localStorage.getItem('usuarioLogado');
+            if (logado !== 'true') {
+                alert('Você precisa fazer login para acessar esta página!');
+                window.location.href = '../login.html';
+            }
+        };
+    </script>
+</body>
+</html>

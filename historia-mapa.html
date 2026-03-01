@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Mental - História - AGV ENEM</title>
+
+<!-- Adicionado no <head> de cada arquivo -->
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../android-chrome-512x512.png">
+<link rel="manifest" href="../site.webmanifest">
+<meta name="msapplication-TileColor" content="#0a1929">
+<meta name="theme-color" content="#0a1929">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --cor-primaria: #b85a3a;
+            --cor-secundaria: #c96b4a;
+            --cor-destaque: #d97e5d;
+            --cor-fundo: #f9ede8;
+            --branco: #ffffff;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--branco);
+            padding: 3px;
+            border: 2px solid #ffd700;
+            transition: all 0.3s;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
+        .header h1 {
+            color: var(--branco);
+            font-size: 1.8rem;
+        }
+
+        .header h1 span {
+            color: #ffd700;
+        }
+
+        .btn-voltar {
+            background: var(--cor-fundo);
+            color: var(--cor-primaria);
+            padding: 10px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-voltar:hover {
+            background: var(--branco);
+            transform: scale(1.05);
+        }
+
+        .mapa-container {
+            background: var(--branco);
+            border-radius: 40px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border: 3px solid var(--cor-primaria);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mapa-container::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 120px;
+            height: 120px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .mapa-titulo {
+            text-align: center;
+            color: var(--cor-primaria);
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .mapa-subtitulo {
+            text-align: center;
+            color: var(--cor-secundaria);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .mapa-central {
+            width: 180px;
+            height: 180px;
+            background: var(--cor-primaria);
+            color: var(--branco);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(184, 90, 58, 0.3);
+            border: 4px solid var(--cor-fundo);
+            padding: 20px;
+            position: relative;
+        }
+
+        .mapa-central::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 40px;
+            height: 40px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.3;
+        }
+
+        .mapa-central span {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .linha-tempo {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0 50px;
+            position: relative;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .linha-tempo::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--cor-primaria);
+        }
+
+        .periodo {
+            background: var(--cor-fundo);
+            padding: 8px 15px;
+            border-radius: 30px;
+            position: relative;
+            z-index: 1;
+            font-weight: bold;
+            color: var(--cor-primaria);
+            border: 2px solid var(--cor-primaria);
+        }
+
+        .topicos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .topico {
+            background: var(--cor-fundo);
+            border-radius: 25px;
+            padding: 25px;
+            border-top: 6px solid var(--cor-primaria);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topico::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: -5px;
+            width: 40px;
+            height: 40px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.05;
+        }
+
+        .topico:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(184, 90, 58, 0.15);
+        }
+
+        .topico h3 {
+            color: var(--cor-primaria);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            text-align: center;
+            border-bottom: 2px solid var(--cor-primaria);
+            padding-bottom: 10px;
+        }
+
+        .conteudo {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .subtopico {
+            background: var(--branco);
+            border-radius: 15px;
+            padding: 15px;
+        }
+
+        .subtopico h4 {
+            color: var(--cor-primaria);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .subtopico ul {
+            list-style: none;
+        }
+
+        .subtopico li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            color: var(--cor-secundaria);
+        }
+
+        .subtopico li::before {
+            content: '•';
+            color: var(--cor-primaria);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .data {
+            background: var(--cor-primaria);
+            color: var(--branco);
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-left: 5px;
+        }
+
+        /* Watermark */
+        .agv-watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        footer {
+            background: var(--cor-primaria);
+            color: var(--branco);
+            padding: 30px 20px;
+            margin-top: 50px;
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--branco);
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="agv-watermark">
+        <img src="../Logo_agv-removebg-preview.png" alt="" style="width: 100%; height: 100%;">
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <!-- LOGO 1/5 -->
+                <img src="../Logo_agv-removebg-preview.png" alt="AGV Logo" class="logo-img">
+                <h1>AGV <span>ENEM</span> - Mapa Mental: História</h1>
+            </div>
+            <a href="../Ambiente Virtual.html" class="btn-voltar">← Voltar</a>
+        </div>
+
+        <div class="mapa-container">
+            <div class="mapa-titulo">🏛️ HISTÓRIA ENEM</div>
+            <div class="mapa-subtitulo">Brasil e Geral - Principais períodos e acontecimentos</div>
+
+            <div class="mapa-central">
+                <span>📜</span>
+                HISTÓRIA<br>45 QUESTÕES
+            </div>
+
+            <div class="linha-tempo">
+                <span class="periodo">Pré-História</span>
+                <span class="periodo">Antiga</span>
+                <span class="periodo">Medieval</span>
+                <span class="periodo">Moderna</span>
+                <span class="periodo">Contemporânea</span>
+            </div>
+
+            <div class="topicos-grid">
+                <div class="topico">
+                    <h3>🇧🇷 BRASIL COLÔNIA <span class="data">1500-1822</span></h3>
+                    <div class="conteudo">
+                        <div class="subtopico">
+                            <h4>Períodos</h4>
+                            <ul>
+                                <li>Pré-colonial (1500-1530): extração de pau-brasil</li>
+                                <li>Capitanias hereditárias (1534)</li>
+                                <li>Governo-geral (1548)</li>
+                                <li>União Ibérica (1580-1640)</li>
+                                <li>Invasões holandesas (1630-1654)</li>
+                            </ul>
+                        </div>
+                        <div class="subtopico">
+                            <h4>Ciclos econômicos</h4>
+                            <ul>
+                                <li>Pau-brasil</li>
+                                <li>Açúcar (nordeste)</li>
+                                <li>Mineração (séc. XVIII)</li>
+                                <li>Pecuária</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topico">
+                    <h3>👑 BRASIL IMPÉRIO <span class="data">1822-1889</span></h3>
+                    <div class="conteudo">
+                        <div class="subtopico">
+                            <h4>Primeiro Reinado (1822-1831)</h4>
+                            <ul>
+                                <li>Independência (7 set 1822)</li>
+                                <li>Constituição de 1824</li>
+                                <li>Confederação do Equador</li>
+                            </ul>
+                        </div>
+                        <div class="subtopico">
+                            <h4>Segundo Reinado (1840-1889)</h4>
+                            <ul>
+                                <li>Café e industrialização</li>
+                                <li>Leis abolicionistas</li>
+                                <li>Guerra do Paraguai</li>
+                                <li>Lei Áurea (1888)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topico">
+                    <h3>🏛️ BRASIL REPÚBLICA <span class="data">1889-hoje</span></h3>
+                    <div class="conteudo">
+                        <div class="subtopico">
+                            <h4>República Velha (1889-1930)</h4>
+                            <ul>
+                                <li>Política café-com-leite</li>
+                                <li>Coronelismo</li>
+                                <li>Revolta da Vacina</li>
+                            </ul>
+                        </div>
+                        <div class="subtopico">
+                            <h4>Era Vargas (1930-1945)</h4>
+                            <ul>
+                                <li>Governo provisório</li>
+                                <li>Estado Novo (1937-1945)</li>
+                                <li>CLT e direitos trabalhistas</li>
+                            </ul>
+                        </div>
+                        <div class="subtopico">
+                            <h4>Ditadura Militar (1964-1985)</h4>
+                            <ul>
+                                <li>Atos Institucionais</li>
+                                <li>Milagre econômico</li>
+                                <li>Diretas Já (1984)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topico">
+                    <h3>🌎 HISTÓRIA GERAL</h3>
+                    <div class="conteudo">
+                        <div class="subtopico">
+                            <h4>Idade Moderna</h4>
+                            <ul>
+                                <li>Renascimento</li>
+                                <li>Reforma Protestante</li>
+                                <li>Absolutismo</li>
+                                <li>Revolução Francesa (1789)</li>
+                            </ul>
+                        </div>
+                        <div class="subtopico">
+                            <h4>Idade Contemporânea</h4>
+                            <ul>
+                                <li>Revolução Industrial</li>
+                                <li>1ª Guerra (1914-1918)</li>
+                                <li>2ª Guerra (1939-1945)</li>
+                                <li>Guerra Fria (1947-1991)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo">
+            <!-- LOGO 2/5 -->
+            <img src="../Logo_agv-removebg-preview.png" alt="AGV Logo">
+            <span style="font-size: 1.3rem; color: #ffd700;">AGV ENEM</span>
+        </div>
+        <p>© 2026 Colégio Estadual Alberto Gomes Veiga</p>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            const logado = localStorage.getItem('usuarioLogado');
+            if (logado !== 'true') {
+                window.location.href = '../login.html';
+            }
+        };
+    </script>
+</body>
+</html>

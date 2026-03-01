@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Mental - Sociologia - AGV ENEM</title>
+
+<!-- Adicionado no <head> de cada arquivo -->
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../android-chrome-512x512.png">
+<link rel="manifest" href="../site.webmanifest">
+<meta name="msapplication-TileColor" content="#0a1929">
+<meta name="theme-color" content="#0a1929">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --cor-primaria: #ff7f50;
+            --cor-secundaria: #ff9f7a;
+            --cor-destaque: #e6734c;
+            --cor-fundo: #fff0e6;
+            --branco: #ffffff;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--branco);
+            padding: 3px;
+            border: 2px solid #ffd700;
+            transition: all 0.3s;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
+        .header h1 {
+            color: var(--branco);
+            font-size: 1.8rem;
+        }
+
+        .header h1 span {
+            color: #ffd700;
+        }
+
+        .btn-voltar {
+            background: var(--cor-fundo);
+            color: var(--cor-primaria);
+            padding: 10px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-voltar:hover {
+            background: var(--branco);
+            transform: scale(1.05);
+        }
+
+        .mapa-container {
+            background: var(--branco);
+            border-radius: 40px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border: 3px solid var(--cor-primaria);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* LOGO CORRIGIDA - TAMANHO REDUZIDO */
+        .mapa-container::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 60px;
+            height: 60px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .mapa-titulo {
+            text-align: center;
+            color: var(--cor-primaria);
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .mapa-subtitulo {
+            text-align: center;
+            color: var(--cor-secundaria);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .mapa-central {
+            width: 180px;
+            height: 180px;
+            background: var(--cor-primaria);
+            color: var(--branco);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(255, 127, 80, 0.3);
+            border: 4px solid var(--cor-fundo);
+            padding: 20px;
+            position: relative;
+        }
+
+        /* LOGO PEQUENA NO BALÃO CENTRAL - TAMBÉM CORRIGIDA */
+        .mapa-central::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.2;
+        }
+
+        .mapa-central span {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .topicos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .topico {
+            background: var(--cor-fundo);
+            border-radius: 25px;
+            padding: 25px;
+            border-top: 6px solid var(--cor-primaria);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* LOGO PEQUENA NOS CARDS - TAMBÉM CORRIGIDA */
+        .topico::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: -5px;
+            width: 30px;
+            height: 30px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.03;
+        }
+
+        .topico:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 127, 80, 0.15);
+        }
+
+        .topico h3 {
+            color: var(--cor-primaria);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            text-align: center;
+            border-bottom: 2px solid var(--cor-primaria);
+            padding-bottom: 10px;
+        }
+
+        .conteudo {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .subtopico {
+            background: var(--branco);
+            border-radius: 15px;
+            padding: 15px;
+        }
+
+        .subtopico h4 {
+            color: var(--cor-primaria);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .subtopico ul {
+            list-style: none;
+        }
+
+        .subtopico li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            color: #444;
+        }
+
+        .subtopico li::before {
+            content: '•';
+            color: var(--cor-primaria);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .pensador {
+            font-weight: bold;
+            color: var(--cor-primaria);
+        }
+
+        .citacao {
+            font-style: italic;
+            background: #ffe8dd;
+            padding: 8px 12px;
+            border-radius: 10px;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            border-left: 3px solid var(--cor-primaria);
+        }
+
+        /* Watermark fixo no canto - TAMBÉM CORRIGIDO */
+        .agv-watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        footer {
+            background: var(--cor-primaria);
+            color: var(--branco);
+            padding: 30px 20px;
+            margin-top: 50px;
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--branco);
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Watermark fixo - TAMANHO CORRIGIDO -->
+    <div class="agv-watermark">
+        <img src="../Logo_agv-removebg-preview.png" alt="" style="width: 100%; height: 100%;">
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <img src="../Logo_agv-removebg-preview.png" alt="AGV Logo" class="logo-img">
+                <h1>AGV <span>ENEM</span> - Mapa Mental: Sociologia</h1>
+            </div>
+            <a href="../Ambiente Virtual.html" class="btn-voltar">← Voltar</a>
+        </div>
+
+        <div class="mapa-container">
+            <div class="mapa-titulo">👥 SOCIOLOGIA ENEM</div>
+            <div class="mapa-subtitulo">Principais autores, conceitos e correntes sociológicas</div>
+
+            <div class="mapa-central">
+                <span>🌍</span>
+                SOCIOLOGIA
+            </div>
+
+            <div class="topicos-grid">
+                <div class="topico">
+                    <h3>🏛️ CLÁSSICOS DA SOCIOLOGIA</h3>
+                    <div class="conteudo">
+                        <div class="subtopico">
+                            <h4>Émile Durkheim</h4>
+                            <ul>
+                                <li><span class="pensador">Fato Social:</span> maneiras de agir, pensar e sentir que exercem coerção social</li>
+                                <li><span class="pensador">Solidariedade Mecânica:</span> sociedades primitivas</li>
+                                <li><span class="pensador">Solidariedade Orgânica:</span> sociedades modernas</li>
+                                <li><span class="pensador">Anomia:</span> ausência de regras sociais</li>
+                            </ul>
+                        </div>
+                        <div class="subtopico">
+                            <h4>Karl Marx</h4>
+                            <ul>
+                                <li><span class="pensador">Luta de classes:</span> burguesia x proletariado</li>
+                                <li><span class="pensador">Mais-valia:</span> trabalho não pago</li>
+                                <li><span class="pensador">Alienação:</span> trabalhador separado do produto</li>
+                                <li><span class="pensador">Infraestrutura x Superestrutura</span></li>
+                            </ul>
+                            <div class="citacao">"A história da sociedade até hoje é a história da luta de classes."</div>
+                        </div>
+                        <div class="subtopico">
+                            <h4>Max Weber</h4>
+                            <ul>
+                                <li><span class="pensador">Ação Social:</span> ação com sentido para o indivíduo</li>
+                                <li><span class="pensador">Tipos ideais:</span> construção teórica</li>
+                                <li><span class="pensador">Ética protestante e espírito do capitalismo</span></li>
+                                <li><span class="pensador">Racionalização da sociedade</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topico">
+                    <h3>🔍 CONCEITOS FUNDAMENTAIS</h3>
+                    <div class="conteudo">
+                        <div class="subtopico">
+                            <h4>Estratificação Social</h4>
+                            <ul>
+                                <li>Classes sociais (Marx)</li>
+                                <li>Estamentos (sociedade feudal)</li>
+                                <li>Castas (Índia)</li>
+                                <li>Mobilidade social</li>
+                            </ul>
+                        </div>
+                        <div class="subtopico">
+                            <h4>Poder e Política</h4>
+                            <ul>
+                                <li>Poder simbólico (Bourdieu)</li>
+                                <li>Dominação legítima (Weber)</li>
+                                <li>Estado e governo</li>
+                                <li>Cidadania e direitos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topico">
+                    <h3>🌎 SOCIOLOGIA CONTEMPORÂNEA</h3>
+                    <div class="conteudo">
+                        <div class="subtopico">
+                            <h4>Pierre Bourdieu</h4>
+                            <ul>
+                                <li><span class="pensador">Capital cultural, econômico e social</span></li>
+                                <li><span class="pensador">Habitus:</span> disposições incorporadas</li>
+                                <li><span class="pensador">Campo social:</span> espaço de disputas</li>
+                                <li><span class="pensador">Violência simbólica</span></li>
+                            </ul>
+                        </div>
+                        <div class="subtopico">
+                            <h4>Zygmunt Bauman</h4>
+                            <ul>
+                                <li><span class="pensador">Modernidade líquida:</span> fluidez das relações</li>
+                                <li><span class="pensador">Amor líquido:</span> relações descartáveis</li>
+                                <li><span class="pensador">Sociedade de consumo</span></li>
+                            </ul>
+                            <div class="citacao">"Vivemos em tempos líquidos. Nada é feito para durar."</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo">
+            <img src="../Logo_agv-removebg-preview.png" alt="AGV Logo">
+            <span style="font-size: 1.3rem; color: #ffd700;">AGV ENEM</span>
+        </div>
+        <p>© 2026 Colégio Estadual Alberto Gomes Veiga</p>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            const logado = localStorage.getItem('usuarioLogado');
+            if (logado !== 'true') {
+                window.location.href = '../login.html';
+            }
+        };
+    </script>
+</body>
+</html>

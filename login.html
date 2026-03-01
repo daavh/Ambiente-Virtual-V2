@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Cadastro - AGV ENEM</title>
+    
+    <!-- ============================================ -->
+    <!-- FAVICON COMPLETO - AGV ENEM (SÓ ISSO FOI ADICIONADO) -->
+    <!-- ============================================ -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="msapplication-TileColor" content="#0a1929">
+    <meta name="theme-color" content="#0a1929">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --azul-marinho: #0a1929;
+            --azul-escuro: #1a3a5f;
+            --azul-medio: #2b5a8c;
+            --azul-claro: #ebf5ff;
+            --branco-puro: #ffffff;
+            --vermelho: #dc3545;
+            --verde: #28a745;
+            --amarelo: #ffc107;
+            --sombra-media: 0 20px 40px -15px rgba(10, 25, 41, 0.3);
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--azul-marinho), var(--azul-escuro));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 50px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: var(--sombra-media);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo-area {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-area img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--branco-puro);
+            padding: 8px;
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+            animation: pulse 2s infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .logo-area h1 {
+            font-size: 2.5rem;
+            color: var(--azul-marinho);
+        }
+
+        .logo-area h1 span {
+            color: #ffd700;
+        }
+
+        .logo-area p {
+            color: var(--azul-escuro);
+            margin-top: 5px;
+        }
+
+        .tab-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: var(--azul-claro);
+            padding: 5px;
+            border-radius: 50px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--azul-marinho);
+        }
+
+        .tab.active {
+            background: var(--azul-marinho);
+            color: var(--branco-puro);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--azul-marinho);
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--azul-claro);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--azul-medio);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(43, 90, 140, 0.1);
+        }
+
+        .form-group input.error {
+            border-color: var(--vermelho);
+        }
+
+        .form-group input.valid {
+            border-color: var(--verde);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 30px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--azul-marinho);
+        }
+
+        .periodo-info {
+            background: var(--azul-claro);
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--azul-marinho);
+            border-left: 4px solid #ffd700;
+        }
+
+        .email-obs {
+            font-size: 0.85rem;
+            color: var(--azul-escuro);
+            margin-top: 5px;
+        }
+
+        .senha-forca {
+            margin-top: 8px;
+            height: 5px;
+            border-radius: 10px;
+            background: #ddd;
+            overflow: hidden;
+        }
+
+        .senha-forca-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .senha-forca-bar.fraca { background-color: var(--vermelho); width: 33%; }
+        .senha-forca-bar.media { background-color: var(--amarelo); width: 66%; }
+        .senha-forca-bar.forte { background-color: var(--verde); width: 100%; }
+
+        .senha-info {
+            font-size: 0.8rem;
+            color: var(--azul-escuro);
+            margin-top: 5px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .senha-info span {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .senha-info .valido {
+            color: var(--verde);
+        }
+
+        .senha-info .invalido {
+            color: var(--vermelho);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: var(--azul-marinho);
+            color: var(--branco-puro);
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-login:hover {
+            background: var(--azul-medio);
+            transform: scale(1.02);
+        }
+
+        .btn-login:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 12px;
+            background: var(--azul-claro);
+            color: var(--azul-marinho);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 40px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 1px solid var(--azul-medio);
+            width: 100%;
+        }
+
+        .btn-voltar:hover {
+            background: var(--azul-medio);
+            color: var(--branco-puro);
+            transform: scale(1.02);
+        }
+
+        .mensagem-erro {
+            color: var(--vermelho);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+            background: rgba(220, 53, 69, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            border-left: 3px solid var(--vermelho);
+        }
+
+        .mensagem-sucesso {
+            color: var(--verde);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+            background: rgba(40, 167, 69, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            border-left: 3px solid var(--verde);
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Watermark */
+        .agv-watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="agv-watermark">
+        <img src="Logo_agv-removebg-preview.png" alt="" style="width: 100%; height: 100%;">
+    </div>
+
+    <div class="login-container">
+        <div class="logo-area">
+            <!-- LOGO 1/5 -->
+            <img src="Logo_agv-removebg-preview.png" alt="AGV Logo">
+            <h1>AGV <span>ENEM</span></h1>
+            <p>Colégio Alberto Gomes Veiga - Paranaguá</p>
+        </div>
+
+        <div class="tab-container">
+            <button class="tab active" onclick="showLogin()">Entrar</button>
+            <button class="tab" onclick="showCadastro()">Cadastrar</button>
+        </div>
+
+        <!-- Formulário de Login -->
+        <div id="login-form">
+            <div class="form-group">
+                <label>E-mail institucional</label>
+                <input type="email" id="login-email" placeholder="seu.nome@escola.pr.gov.br">
+                <div class="email-obs">Use seu e-mail @escola.pr.gov.br</div>
+            </div>
+            <div class="form-group">
+                <label>Senha</label>
+                <input type="password" id="login-senha" placeholder="••••••••">
+            </div>
+            <div class="mensagem-erro" id="login-erro"></div>
+            <div class="mensagem-sucesso" id="login-sucesso"></div>
+            <button class="btn-login" onclick="fazerLogin()">Entrar na plataforma</button>
+        </div>
+
+        <!-- Formulário de Cadastro -->
+        <div id="cadastro-form" style="display: none;">
+            <div class="form-group">
+                <label>Nome completo</label>
+                <input type="text" id="cadastro-nome" placeholder="Digite seu nome" onkeyup="verificarForcaSenha()">
+            </div>
+            
+            <div class="form-group">
+                <label>E-mail institucional</label>
+                <input type="email" id="cadastro-email" placeholder="seu.nome@escola.pr.gov.br" onkeyup="verificarEmail()">
+                <div class="email-obs">O e-mail deve terminar com @escola.pr.gov.br</div>
+                <div class="mensagem-erro" id="email-erro" style="display: none;"></div>
+            </div>
+
+            <!-- Pergunta se é técnico -->
+            <div class="form-group">
+                <label>Você é aluno de curso técnico?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="tecnico" id="tecnico-sim" value="sim" onclick="mostrarTurmasTecnico()">
+                        <label for="tecnico-sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="tecnico" id="tecnico-nao" value="nao" onclick="mostrarTurmasRegulares()" checked>
+                        <label for="tecnico-nao">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informação de período (dinâmica) -->
+            <div class="periodo-info" id="periodo-info">
+                🕐 Turmas regulares - Período da TARDE
+            </div>
+
+            <!-- Seleção de Série -->
+            <div class="form-group">
+                <label>Série</label>
+                <select id="cadastro-serie" onchange="atualizarTurmas()">
+                    <option value="">Selecione sua série</option>
+                    <option value="1ano">1º Ano</option>
+                    <option value="2ano">2º Ano</option>
+                    <option value="3ano">3º Ano</option>
+                </select>
+            </div>
+
+            <!-- Seleção de Turma (dinâmica) -->
+            <div class="form-group">
+                <label>Turma</label>
+                <select id="cadastro-turma">
+                    <option value="">Selecione sua turma</option>
+                </select>
+            </div>
+
+            <!-- CAMPOS DE SENHA COM VALIDAÇÃO -->
+            <div class="form-group">
+                <label>Senha</label>
+                <input type="password" id="cadastro-senha" placeholder="Crie uma senha" onkeyup="verificarForcaSenha()">
+                
+                <div class="senha-forca">
+                    <div class="senha-forca-bar" id="forca-senha-bar"></div>
+                </div>
+
+                <div class="senha-info">
+                    <span id="req-tamanho" class="invalido">⚠️ 6+ caracteres</span>
+                    <span id="req-numero" class="invalido">🔢 1 número</span>
+                    <span id="req-especial" class="invalido">✨ 1 caractere especial</span>
+                    <span id="req-nome" class="invalido">👤 não pode conter seu nome</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Confirmar senha</label>
+                <input type="password" id="cadastro-confirmar" placeholder="Digite a senha novamente" onkeyup="verificarConfirmacao()">
+                <div class="mensagem-erro" id="confirmar-erro" style="display: none;"></div>
+            </div>
+            
+            <div class="mensagem-erro" id="cadastro-erro"></div>
+            <div class="mensagem-sucesso" id="cadastro-sucesso"></div>
+            <button class="btn-login" id="btn-cadastrar" onclick="fazerCadastro()">Criar conta</button>
+        </div>
+
+        <a href="Ambiente Virtual.html" class="btn-voltar">
+            ← Voltar para o ambiente virtual
+        </a>
+    </div>
+
+    <script>
+        // ============================================
+        // VARIÁVEIS GLOBAIS
+        // ============================================
+        let isTecnico = false;
+        const STORAGE_KEY = 'agv_usuarios';
+        let requisitosSenha = {
+            tamanho: false,
+            numero: false,
+            especial: false,
+            nome: false
+        };
+
+        // ============================================
+        // FUNÇÕES DE TELA
+        // ============================================
+        function showLogin() {
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('cadastro-form').style.display = 'none';
+            document.querySelectorAll('.tab')[0].classList.add('active');
+            document.querySelectorAll('.tab')[1].classList.remove('active');
+            
+            document.getElementById('login-erro').style.display = 'none';
+            document.getElementById('login-sucesso').style.display = 'none';
+        }
+
+        function showCadastro() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('cadastro-form').style.display = 'block';
+            document.querySelectorAll('.tab')[0].classList.remove('active');
+            document.querySelectorAll('.tab')[1].classList.add('active');
+            
+            document.getElementById('cadastro-erro').style.display = 'none';
+            document.getElementById('cadastro-sucesso').style.display = 'none';
+            
+            mostrarTurmasRegulares();
+        }
+
+        // ============================================
+        // FUNÇÕES DE TURMAS
+        // ============================================
+        function mostrarTurmasTecnico() {
+            isTecnico = true;
+            document.getElementById('periodo-info').innerHTML = '🕐 Cursos técnicos - Período da MANHÃ (DS, BIO, ADM, PORTOS)';
+            atualizarTurmas();
+        }
+
+        function mostrarTurmasRegulares() {
+            isTecnico = false;
+            document.getElementById('periodo-info').innerHTML = '🕐 Turmas regulares - Período da TARDE (A, B, C)';
+            atualizarTurmas();
+        }
+
+        function atualizarTurmas() {
+            const serieSelect = document.getElementById('cadastro-serie');
+            const turmaSelect = document.getElementById('cadastro-turma');
+            const serie = serieSelect.value;
+            
+            turmaSelect.innerHTML = '<option value="">Selecione sua turma</option>';
+            
+            if (!serie) return;
+            
+            const ano = serie.replace('ano', '');
+            
+            if (isTecnico) {
+                const tecnicos = ['DS', 'BIO', 'ADM', 'PORTOS'];
+                tecnicos.forEach(curso => {
+                    const option = document.createElement('option');
+                    option.value = `${ano}${curso}`;
+                    option.textContent = `${ano}º ${curso} (Manhã)`;
+                    turmaSelect.appendChild(option);
+                });
+            } else {
+                const letras = ['A', 'B', 'C'];
+                letras.forEach(letra => {
+                    const option = document.createElement('option');
+                    option.value = `${ano}${letra}`;
+                    option.textContent = `${ano}º Ano ${letra} (Tarde)`;
+                    turmaSelect.appendChild(option);
+                });
+            }
+        }
+
+        // ============================================
+        // VALIDAÇÃO DE EMAIL
+        // ============================================
+        function validarEmailEscola(email) {
+            return email.toLowerCase().endsWith('@escola.pr.gov.br');
+        }
+
+        function verificarEmail() {
+            const email = document.getElementById('cadastro-email').value.trim().toLowerCase();
+            const erroElement = document.getElementById('email-erro');
+            
+            if (email && !validarEmailEscola(email)) {
+                erroElement.textContent = 'O e-mail deve terminar com @escola.pr.gov.br';
+                erroElement.style.display = 'block';
+                document.getElementById('cadastro-email').classList.add('error');
+                return false;
+            } else {
+                erroElement.style.display = 'none';
+                document.getElementById('cadastro-email').classList.remove('error');
+                document.getElementById('cadastro-email').classList.add('valid');
+                return true;
+            }
+        }
+
+        // ============================================
+        // VALIDAÇÃO DE SENHA
+        // ============================================
+        function verificarForcaSenha() {
+            const senha = document.getElementById('cadastro-senha').value;
+            const nome = document.getElementById('cadastro-nome').value.toLowerCase();
+            const barra = document.getElementById('forca-senha-bar');
+            
+            requisitosSenha.tamanho = senha.length >= 6;
+            requisitosSenha.numero = /[0-9]/.test(senha);
+            requisitosSenha.especial = /[!@#$%^&*(),.?":{}|<>]/.test(senha);
+            
+            if (nome && nome.length > 2) {
+                const partesNome = nome.split(' ');
+                requisitosSenha.nome = !partesNome.some(parte => 
+                    parte.length > 2 && senha.toLowerCase().includes(parte)
+                );
+            } else {
+                requisitosSenha.nome = true;
+            }
+
+            atualizarRequisitosUI();
+
+            const forca = Object.values(requisitosSenha).filter(Boolean).length;
+            
+            barra.className = 'senha-forca-bar';
+            if (forca <= 2) {
+                barra.classList.add('fraca');
+            } else if (forca === 3) {
+                barra.classList.add('media');
+            } else if (forca === 4) {
+                barra.classList.add('forte');
+            }
+
+            const todosRequisitos = Object.values(requisitosSenha).every(Boolean);
+            document.getElementById('btn-cadastrar').disabled = !todosRequisitos;
+        }
+
+        function atualizarRequisitosUI() {
+            const reqTamanho = document.getElementById('req-tamanho');
+            const reqNumero = document.getElementById('req-numero');
+            const reqEspecial = document.getElementById('req-especial');
+            const reqNome = document.getElementById('req-nome');
+
+            reqTamanho.className = requisitosSenha.tamanho ? 'valido' : 'invalido';
+            reqNumero.className = requisitosSenha.numero ? 'valido' : 'invalido';
+            reqEspecial.className = requisitosSenha.especial ? 'valido' : 'invalido';
+            reqNome.className = requisitosSenha.nome ? 'valido' : 'invalido';
+
+            reqTamanho.innerHTML = requisitosSenha.tamanho ? '✅ 6+ caracteres' : '❌ 6+ caracteres';
+            reqNumero.innerHTML = requisitosSenha.numero ? '✅ 1 número' : '❌ 1 número';
+            reqEspecial.innerHTML = requisitosSenha.especial ? '✅ 1 caractere especial' : '❌ 1 caractere especial';
+            reqNome.innerHTML = requisitosSenha.nome ? '✅ não contém seu nome' : '❌ não pode conter seu nome';
+        }
+
+        function verificarConfirmacao() {
+            const senha = document.getElementById('cadastro-senha').value;
+            const confirmar = document.getElementById('cadastro-confirmar').value;
+            const erroElement = document.getElementById('confirmar-erro');
+
+            if (confirmar && senha !== confirmar) {
+                erroElement.textContent = 'As senhas não coincidem!';
+                erroElement.style.display = 'block';
+                document.getElementById('cadastro-confirmar').classList.add('error');
+                return false;
+            } else {
+                erroElement.style.display = 'none';
+                document.getElementById('cadastro-confirmar').classList.remove('error');
+                document.getElementById('cadastro-confirmar').classList.add('valid');
+                return true;
+            }
+        }
+
+        // ============================================
+        // VERIFICAR SE SENHA JÁ EXISTE
+        // ============================================
+        function senhaJaExiste(senha) {
+            const usuarios = carregarUsuarios();
+            return usuarios.some(u => u.senha === senha);
+        }
+
+        // ============================================
+        // FUNÇÕES DE ARMAZENAMENTO
+        // ============================================
+        function carregarUsuarios() {
+            const usuarios = localStorage.getItem(STORAGE_KEY);
+            return usuarios ? JSON.parse(usuarios) : [];
+        }
+
+        function salvarUsuarios(usuarios) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(usuarios));
+        }
+
+        function encontrarUsuarioPorEmail(email) {
+            const usuarios = carregarUsuarios();
+            return usuarios.find(u => u.email === email);
+        }
+
+        // ============================================
+        // FUNÇÃO DE CADASTRO
+        // ============================================
+        function fazerCadastro() {
+            const nome = document.getElementById('cadastro-nome').value.trim();
+            const email = document.getElementById('cadastro-email').value.trim().toLowerCase();
+            const serie = document.getElementById('cadastro-serie').value;
+            const turma = document.getElementById('cadastro-turma').value;
+            const senha = document.getElementById('cadastro-senha').value;
+            const confirmar = document.getElementById('cadastro-confirmar').value;
+            const tecnicoSim = document.getElementById('tecnico-sim').checked;
+            const erroElement = document.getElementById('cadastro-erro');
+            const sucessoElement = document.getElementById('cadastro-sucesso');
+
+            erroElement.style.display = 'none';
+            sucessoElement.style.display = 'none';
+
+            if (!nome || !email || !serie || !turma || !senha || !confirmar) {
+                erroElement.textContent = 'Preencha todos os campos!';
+                erroElement.style.display = 'block';
+                return;
+            }
+
+            if (!validarEmailEscola(email)) {
+                erroElement.textContent = 'Use um e-mail institucional @escola.pr.gov.br';
+                erroElement.style.display = 'block';
+                return;
+            }
+
+            const usuarios = carregarUsuarios();
+            const emailExistente = usuarios.find(u => u.email === email);
+
+            if (emailExistente) {
+                erroElement.textContent = 'Este e-mail já está cadastrado! Tente outro ou faça login.';
+                erroElement.style.display = 'block';
+                return;
+            }
+
+            if (!requisitosSenha.tamanho) {
+                erroElement.textContent = 'A senha deve ter pelo menos 6 caracteres';
+                erroElement.style.display = 'block';
+                return;
+            }
+
+            if (!requisitosSenha.numero) {
+                erroElement.textContent = 'A senha deve conter pelo menos 1 número';
+                erroElement.style.display = 'block';
+                return;
+            }
+
+            if (!requisitosSenha.especial) {
+                erroElement.textContent = 'A senha deve conter pelo menos 1 caractere especial (!@#$%^&*)';
+                erroElement.style.display = 'block';
+                return;
+            }
+
+            if (!requisitosSenha.nome) {
+                erroElement.textContent = 'A senha não pode conter partes do seu nome';
+                erroElement.style.display = 'block';
+                return;
+            }
+
+            if (senha !== confirmar) {
+                erroElement.textContent = 'As senhas não coincidem!';
+                erroElement.style.display = 'block';
+                return;
+            }
+
+            if (senhaJaExiste(senha)) {
+                erroElement.textContent = 'Esta senha já está sendo usada por outro usuário! Escolha outra.';
+                erroElement.style.display = 'block';
+                return;
+            }
+
+            const periodo = tecnicoSim ? 'Manhã' : 'Tarde';
+            
+            const novoUsuario = {
+                nome: nome,
+                email: email,
+                serie: serie,
+                turma: turma,
+                senha: senha,
+                tecnico: tecnicoSim,
+                periodo: periodo,
+                dataCadastro: new Date().toISOString()
+            };
+
+            usuarios.push(novoUsuario);
+            salvarUsuarios(usuarios);
+
+            sucessoElement.textContent = `Cadastro realizado com sucesso, ${nome}! Agora faça login.`;
+            sucessoElement.style.display = 'block';
+
+            setTimeout(() => {
+                document.getElementById('cadastro-nome').value = '';
+                document.getElementById('cadastro-email').value = '';
+                document.getElementById('cadastro-serie').value = '';
+                document.getElementById('cadastro-turma').innerHTML = '<option value="">Selecione sua turma</option>';
+                document.getElementById('cadastro-senha').value = '';
+                document.getElementById('cadastro-confirmar').value = '';
+                document.getElementById('tecnico-nao').checked = true;
+                mostrarTurmasRegulares();
+                
+                document.getElementById('forca-senha-bar').className = 'senha-forca-bar';
+                
+                showLogin();
+            }, 2000);
+        }
+
+        // ============================================
+        // FUNÇÃO DE LOGIN
+        // ============================================
+        function fazerLogin() {
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
+            const senha = document.getElementById('login-senha').value;
+            const erroElement = document.getElementById('login-erro');
+            const sucessoElement = document.getElementById('login-sucesso');
+
+            erroElement.style.display = 'none';
+            sucessoElement.style.display = 'none';
+
+            if (!email || !senha) {
+                erroElement.textContent = 'Preencha todos os campos!';
+                erroElement.style.display = 'block';
+                return;
+            }
+
+            if (!validarEmailEscola(email)) {
+                erroElement.textContent = 'Use um e-mail institucional @escola.pr.gov.br';
+                erroElement.style.display = 'block';
+                return;
+            }
+
+            const usuario = encontrarUsuarioPorEmail(email);
+
+            if (!usuario) {
+                erroElement.textContent = 'E-mail não cadastrado! Faça seu cadastro primeiro.';
+                erroElement.style.display = 'block';
+                return;
+            }
+
+            if (usuario.senha !== senha) {
+                erroElement.textContent = 'Senha incorreta! Tente novamente.';
+                erroElement.style.display = 'block';
+                return;
+            }
+
+            localStorage.setItem('usuarioLogado', 'true');
+            localStorage.setItem('userEmail', email);
+            
+            sucessoElement.textContent = `Bem-vindo de volta, ${usuario.nome}! Redirecionando...`;
+            sucessoElement.style.display = 'block';
+
+            setTimeout(() => {
+                window.location.href = 'Ambiente Virtual.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

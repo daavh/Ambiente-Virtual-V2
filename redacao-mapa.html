@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Mental - Redação - AGV ENEM</title>
+
+<!-- Adicionado no <head> de cada arquivo -->
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../android-chrome-512x512.png">
+<link rel="manifest" href="../site.webmanifest">
+<meta name="msapplication-TileColor" content="#0a1929">
+<meta name="theme-color" content="#0a1929">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --cor-primaria: #0a1929;
+            --cor-secundaria: #1e3a5f;
+            --cor-destaque: #2b5a8c;
+            --cor-fundo: #ebf5ff;
+            --branco: #ffffff;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--branco);
+            padding: 3px;
+            border: 2px solid #ffd700;
+            transition: all 0.3s;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
+        .header h1 {
+            color: var(--branco);
+            font-size: 1.8rem;
+        }
+
+        .header h1 span {
+            color: #ffd700;
+        }
+
+        .btn-voltar {
+            background: var(--cor-fundo);
+            color: var(--cor-primaria);
+            padding: 10px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-voltar:hover {
+            background: var(--branco);
+            transform: scale(1.05);
+        }
+
+        .mapa-container {
+            background: var(--branco);
+            border-radius: 40px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border: 3px solid var(--cor-primaria);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mapa-container::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 120px;
+            height: 120px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .mapa-titulo {
+            text-align: center;
+            color: var(--cor-primaria);
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .mapa-subtitulo {
+            text-align: center;
+            color: var(--cor-secundaria);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .mapa-central {
+            width: 180px;
+            height: 180px;
+            background: var(--cor-primaria);
+            color: var(--branco);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(10, 25, 41, 0.3);
+            border: 4px solid var(--cor-fundo);
+            padding: 20px;
+            position: relative;
+        }
+
+        .mapa-central::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 40px;
+            height: 40px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.3;
+        }
+
+        .mapa-central span {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .ramos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .ramo {
+            background: var(--cor-fundo);
+            border-radius: 25px;
+            padding: 25px;
+            border-top: 6px solid var(--cor-primaria);
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ramo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: -5px;
+            width: 40px;
+            height: 40px;
+            background: url('../Logo_agv-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.05;
+        }
+
+        .ramo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(10, 25, 41, 0.15);
+        }
+
+        .ramo h3 {
+            color: var(--cor-primaria);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            text-align: center;
+            border-bottom: 2px solid var(--cor-primaria);
+            padding-bottom: 10px;
+        }
+
+        .ramo-conteudo {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .item {
+            background: var(--branco);
+            border-radius: 15px;
+            padding: 12px 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .item strong {
+            color: var(--cor-primaria);
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .item p {
+            color: var(--cor-secundaria);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .item-exemplo {
+            background: #d0e2ff;
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-style: italic;
+            color: var(--cor-primaria);
+            font-size: 0.9rem;
+        }
+
+        /* Watermark */
+        .agv-watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        footer {
+            background: var(--cor-primaria);
+            color: var(--branco);
+            padding: 30px 20px;
+            margin-top: 50px;
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--branco);
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="agv-watermark">
+        <img src="../Logo_agv-removebg-preview.png" alt="" style="width: 100%; height: 100%;">
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <!-- LOGO 1/5 -->
+                <img src="../Logo_agv-removebg-preview.png" alt="AGV Logo" class="logo-img">
+                <h1>AGV <span>ENEM</span> - Mapa Mental: Redação</h1>
+            </div>
+            <a href="../Ambiente Virtual.html" class="btn-voltar">← Voltar</a>
+        </div>
+
+        <div class="mapa-container">
+            <div class="mapa-titulo">🗺️ REDAÇÃO ENEM</div>
+            <div class="mapa-subtitulo">Estrutura, Competências e Técnicas para Nota 1000</div>
+            
+            <div class="mapa-central">
+                <span>📝</span>
+                REDAÇÃO<br>NOTA 1000
+            </div>
+
+            <div class="ramos-grid">
+                <div class="ramo">
+                    <h3>📋 ESTRUTURA DO TEXTO</h3>
+                    <div class="ramo-conteudo">
+                        <div class="item">
+                            <strong>Introdução (1º parágrafo)</strong>
+                            <p>Apresentação do tema e tese (seu ponto de vista)</p>
+                            <div class="item-exemplo">Ex: "No Brasil contemporâneo, o acesso à tecnologia ainda é um desafio..."</div>
+                        </div>
+                        <div class="item">
+                            <strong>Desenvolvimento 1 (2º parágrafo)</strong>
+                            <p>Primeiro argumento + repertório sociocultural</p>
+                            <div class="item-exemplo">Ex: "Segundo dados do IBGE, 40% das residências não possuem internet..."</div>
+                        </div>
+                        <div class="item">
+                            <strong>Desenvolvimento 2 (3º parágrafo)</strong>
+                            <p>Segundo argumento + consequências</p>
+                            <div class="item-exemplo">Ex: "Essa exclusão digital aprofunda desigualdades educacionais..."</div>
+                        </div>
+                        <div class="item">
+                            <strong>Conclusão (4º parágrafo)</strong>
+                            <p>Retomar tese + proposta de intervenção</p>
+                            <div class="item-exemplo">Ex: "Portanto, cabe ao MEC implementar políticas de inclusão digital..."</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ramo">
+                    <h3>🎯 5 COMPETÊNCIAS</h3>
+                    <div class="ramo-conteudo">
+                        <div class="item">
+                            <strong>C1 - Domínio da norma culta</strong>
+                            <p>Gramática, ortografia, concordância e pontuação corretas</p>
+                        </div>
+                        <div class="item">
+                            <strong>C2 - Compreender o tema</strong>
+                            <p>Não fugir do assunto proposto, desenvolver o tema</p>
+                        </div>
+                        <div class="item">
+                            <strong>C3 - Argumentação</strong>
+                            <p>Selecionar e organizar argumentos consistentes</p>
+                        </div>
+                        <div class="item">
+                            <strong>C4 - Coesão textual</strong>
+                            <p>Uso correto de conectivos (portanto, além disso, entretanto)</p>
+                        </div>
+                        <div class="item">
+                            <strong>C5 - Proposta de intervenção</strong>
+                            <p>Agente, ação, meio, efeito, detalhamento</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ramo">
+                    <h3>📚 REPERTÓRIO SOCIOCULTURAL</h3>
+                    <div class="ramo-conteudo">
+                        <div class="item">
+                            <strong>Filmes e Séries</strong>
+                            <p>"Que Horas Ela Volta?", "O Contador de Histórias", "Black Mirror"</p>
+                        </div>
+                        <div class="item">
+                            <strong>Livros e Autores</strong>
+                            <p>Machado de Assis, "Capitães da Areia", "Vidas Secas"</p>
+                        </div>
+                        <div class="item">
+                            <strong>Filósofos</strong>
+                            <p>Paulo Freire (educação), Bauman (modernidade líquida)</p>
+                        </div>
+                        <div class="item">
+                            <strong>Dados e Fatos</strong>
+                            <p>Constituição Federal, IBGE, ONU, estatísticas atuais</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ramo">
+                    <h3>⚠️ ERROS COMUNS</h3>
+                    <div class="ramo-conteudo">
+                        <div class="item">
+                            <strong>Fuga ao tema</strong>
+                            <p>Falar de assunto diferente do proposto</p>
+                        </div>
+                        <div class="item">
+                            <strong>Proposta genérica</strong>
+                            <p>"O governo deve fazer algo" - Sem detalhamento</p>
+                        </div>
+                        <div class="item">
+                            <strong>Conectivos inadequados</strong>
+                            <p>Uso errado de "portanto", "entretanto", "ademais"</p>
+                        </div>
+                        <div class="item">
+                            <strong>Clichês</strong>
+                            <p>"Desde os primórdios", "nos dias atuais" (muito repetido)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo">
+            <!-- LOGO 2/5 -->
+            <img src="../Logo_agv-removebg-preview.png" alt="AGV Logo">
+            <span style="font-size: 1.3rem; color: #ffd700;">AGV ENEM</span>
+        </div>
+        <p>© 2026 Colégio Estadual Alberto Gomes Veiga</p>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            const logado = localStorage.getItem('usuarioLogado');
+            if (logado !== 'true') {
+                window.location.href = '../login.html';
+            }
+        };
+    </script>
+</body>
+</html>

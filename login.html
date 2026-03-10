@@ -6,7 +6,7 @@
     <title>Login / Cadastro - AGV ENEM</title>
     
     <!-- ============================================ -->
-    <!-- FAVICON COMPLETO - AGV ENEM (SÓ ISSO FOI ADICIONADO) -->
+    <!-- FAVICON COMPLETO - AGV ENEM                  -->
     <!-- ============================================ -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -36,6 +36,10 @@
             --verde: #28a745;
             --amarelo: #ffc107;
             --sombra-media: 0 20px 40px -15px rgba(10, 25, 41, 0.3);
+            --google-blue: #4285f4;
+            --google-red: #ea4335;
+            --google-yellow: #fbbc05;
+            --google-green: #34a853;
         }
 
         body {
@@ -255,6 +259,70 @@
             transform: none;
         }
 
+        /* ============================================ */
+        /* BOTÃO REAL DO GOOGLE - SIGA O PADRÃO OFICIAL */
+        /* ============================================ */
+        .gsi-material-button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background-color: var(--branco-puro);
+            border: 1px solid #747775;
+            border-radius: 50px;
+            padding: 14px 20px;
+            font-family: 'Roboto', arial, sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 0.25px;
+            color: #1f1f1f;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .gsi-material-button:hover {
+            background-color: #f8faff;
+            border-color: #1f1f1f;
+            box-shadow: 0 1px 3px 1px rgba(66, 64, 67, 0.15), 0 1px 2px 0 rgba(60, 64, 67, 0.3);
+        }
+
+        .gsi-material-button:active {
+            background-color: #e8eef9;
+        }
+
+        .gsi-material-button__icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .gsi-material-button__icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+            color: var(--azul-escuro);
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--azul-claro);
+        }
+
+        .divider span {
+            padding: 0 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
         .btn-voltar {
             display: block;
             text-align: center;
@@ -335,6 +403,26 @@
         <div class="tab-container">
             <button class="tab active" onclick="showLogin()">Entrar</button>
             <button class="tab" onclick="showCadastro()">Cadastrar</button>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- BOTÃO REAL DO GOOGLE - SIGA O PADRÃO OFICIAL -->
+        <!-- ============================================ -->
+        <button class="gsi-material-button" onclick="entrarComGoogle()">
+            <div class="gsi-material-button__icon">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                    <path fill="none" d="M0 0h48v48H0z"></path>
+                </svg>
+            </div>
+            <span>Continuar com Google</span>
+        </button>
+
+        <div class="divider">
+            <span>ou</span>
         </div>
 
         <!-- Formulário de Login -->
@@ -451,6 +539,25 @@
             especial: false,
             nome: false
         };
+
+        // ============================================
+        // FUNÇÃO REAL - ENTRAR COM GOOGLE
+        // ============================================
+        function entrarComGoogle() {
+            // ============================================
+            // COLE AQUI SUA URL DE AUTENTICAÇÃO DO GOOGLE
+            // ============================================
+            // Exemplo de URL (substitua pelos seus dados):
+            const googleAuthUrl = 'https://accounts.google.com/o/oauth2/auth?' +
+                'client_id=SEU_CLIENT_ID.apps.googleusercontent.com&' +
+                'redirect_uri=http://localhost:5500/Ambiente%20Virtual.html&' +
+                'response_type=code&' +
+                'scope=email%20profile%20openid&' +
+                'prompt=select_account';
+            
+            // Redirecionar para o Google
+            window.location.href = googleAuthUrl;
+        }
 
         // ============================================
         // FUNÇÕES DE TELA

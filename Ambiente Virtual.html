@@ -2712,7 +2712,55 @@
             <p style="margin-top: 8px;">Preparação para o ENEM - Ensino Médio e Cursos Técnicos</p>
         </div>
     </footer>
-
+<script>
+    (function() {
+        // Nome único no sessionStorage para evitar conflitos
+        const STORAGE_KEY = 'agv_posicao_ambiente';
+        
+        // Restaurar posição
+        function restaurarPosicao() {
+            try {
+                const posicaoSalva = sessionStorage.getItem(STORAGE_KEY);
+                if (posicaoSalva) {
+                    const posicao = parseInt(posicaoSalva);
+                    // Só restaura se for um número válido
+                    if (!isNaN(posicao) && posicao > 0) {
+                        // Pequeno delay para garantir que tudo carregou
+                        setTimeout(() => {
+                            window.scrollTo({
+                                top: posicao,
+                                behavior: 'auto' // 'smooth' para suave
+                            });
+                        }, 150);
+                    }
+                }
+            } catch (e) {
+                console.log('Erro ao restaurar posição:', e);
+            }
+        }
+        
+        // Salvar posição
+        function salvarPosicao() {
+            try {
+                sessionStorage.setItem(STORAGE_KEY, window.scrollY);
+            } catch (e) {
+                console.log('Erro ao salvar posição:', e);
+            }
+        }
+        
+        // Eventos
+        window.addEventListener('load', restaurarPosicao);
+        window.addEventListener('beforeunload', salvarPosicao);
+        
+        // Também salva quando clica em links (redundância segura)
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (link && link.href && !link.href.includes('#')) {
+                salvarPosicao();
+            }
+        });
+    })();
+</script>
     <script>
         // Variável para controlar se o usuário está logado
         let usuarioLogado = false;
